@@ -1,12 +1,3 @@
-// interface Supplier{
-//     name: string;
-//     phone: number;
-//     direction: string;
-//     nit: number;
-//     email: string;
-//     contact: string;
-// }
-
 async function GetSuppliersData() {
     try {
         const token = sessionStorage.getItem('token')

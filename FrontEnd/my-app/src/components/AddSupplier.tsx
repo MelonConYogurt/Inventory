@@ -38,13 +38,13 @@ export default function FormSupplier() {
   });
 
   useEffect(() => {
-    const suppliersData = GetSuppliersData();
-
-    if (suppliersData) {
+    async function fetchSuppliers() {
+      const suppliersData = await GetSuppliersData();
       setTableData(suppliersData);
     }
+    fetchSuppliers();
   }, []);
-  1;
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const {name, value} = e.target;
     setData({...data, [name]: value});
@@ -71,15 +71,15 @@ export default function FormSupplier() {
   }
 
   return (
-    <div className="flex flex-col gap-5">
-      <div>
+    <div className="flex flex-col gap-">
+      <div className="mb-">
         <h1 className="text-3xl">Register a new supplier</h1>
         <p className="text-base font-light">
           You can search if the supplier already exists in the data table
         </p>
       </div>
       <hr />
-      <div className="self-start w-full max-w-2xl mx-auto">
+      <div className="self-start w-full max-w-2xl mx-auto mb-5 mt-5">
         <Card className="dark:bg-transparent rounded-xl">
           <CardHeader>
             <CardTitle>Contact Information</CardTitle>
@@ -178,8 +178,17 @@ export default function FormSupplier() {
           </CardContent>
         </Card>
       </div>
-      <div>
-        <DataTable columns={columns} data={tableData} />
+      <div className="mt-5">
+        <div>
+          <h1 className="text-3xl">Register a new supplier</h1>
+          <p className="text-base font-light">
+            You can search if the supplier already exists in the data table
+          </p>
+        </div>
+        <hr />
+        <div className="mb-5 mt-5">
+          <DataTable columns={columns} data={tableData} />
+        </div>
       </div>
     </div>
   );

@@ -172,11 +172,11 @@ async def get_suppliers_data():
                 phone = row[2],
                 direction = row[3],
                 nit = row[4],
-                email =row[5],
-                contact =row[6]
+                email = row[5],
+                contact = row[6]
             )
             list.append(supplier)
-        return list
+        return list_suppliers(suppliers=list)
     except IntegrityError as e:
         raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
     except OperationalError as e:
