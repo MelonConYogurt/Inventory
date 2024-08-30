@@ -46,64 +46,78 @@ export default function Login({onLoginSuccess}: LoginProps) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-900 ">
-      <Card className="w-full max-w-sm mx-auto bg-transparent border-zinc-600 rounded-xl">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center text-zinc-100">
-            Iniciar Sesión
-          </CardTitle>
-          <CardDescription className="text-center text-zinc-300">
-            Accede a tu cuenta para gestionar el inventario
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="Username" className="sr-only">
-              Username
-            </Label>
-            <div className="relative">
-              <UserIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-              <Input
-                id="Username"
-                placeholder="Username"
-                type="text"
-                className="pl-10 dark:bg-transparent !rounded-[8px]"
-                required
-                name="username"
-                onChange={handleChange}
-              />
+    <div className="area">
+      <ul className="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div className="min-h-screen flex items-center justify-center bg-zinc-900 ">
+        <Card className="w-full max-w-sm mx-auto bg-transparent border-zinc-600 rounded-xl">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-center text-zinc-100">
+              Iniciar Sesión
+            </CardTitle>
+            <CardDescription className="text-center text-zinc-300">
+              Accede a tu cuenta para gestionar el inventario
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="Username" className="sr-only">
+                Username
+              </Label>
+              <div className="relative">
+                <UserIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                <Input
+                  id="Username"
+                  placeholder="Username"
+                  type="text"
+                  className="pl-10 dark:bg-transparent !rounded-[8px]"
+                  required
+                  name="username"
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password" className="sr-only">
-              Password
-            </Label>
-            <div className="relative">
-              <LockIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-              <Input
-                id="password"
-                placeholder="password"
-                type="password"
-                className="pl-10 dark:bg-transparent !rounded-[8px]"
-                required
-                name="password"
-                onChange={handleChange}
-              />
+            <div className="space-y-2">
+              <Label htmlFor="password" className="sr-only">
+                Password
+              </Label>
+              <div className="relative">
+                <LockIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                <Input
+                  id="password"
+                  placeholder="password"
+                  type="password"
+                  className="pl-10 dark:bg-transparent !rounded-[8px]"
+                  required
+                  name="password"
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button
-            variant={"outline"}
-            className="w-full bg-transparent rounded-xl"
-            onClick={handleSubmit}
-          >
-            Iniciar Sesión
-          </Button>
-        </CardFooter>
-      </Card>
-      <div>
-        <Toaster richColors />
+          </CardContent>
+          <CardFooter>
+            <Button
+              variant={"outline"}
+              className="w-full bg-transparent rounded-xl z-10"
+              onClick={handleSubmit}
+            >
+              Iniciar Sesión
+            </Button>
+          </CardFooter>
+        </Card>
+        <div>
+          <Toaster richColors />
+        </div>
       </div>
     </div>
   );
