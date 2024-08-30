@@ -1,3 +1,5 @@
+"use client";
+
 import {Button} from "@/components/ui/button";
 import {
   Card,
@@ -11,20 +13,20 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {DataTable} from "./Data-table-supplier";
 import {columns} from "./Columns-suppliers";
-import {useState} from "react";
+import {useState, FormEvent} from "react";
 import SendSupplierData from "@/utils/SendSupplier";
 
-export default function FormSupplier() {
-  interface Supplier {
-    name: string;
-    phone: number;
-    direction: string;
-    nit: number;
-    email: string;
-    contact: string;
-  }
+interface Supplier {
+  name: string;
+  phone: string;
+  direction: string;
+  nit: string;
+  email: string;
+  contact: string;
+}
 
-  const [data, setData] = useState({
+export default function FormSupplier() {
+  const [data, setData] = useState<Supplier>({
     name: "",
     phone: "",
     direction: "",
@@ -38,17 +40,37 @@ export default function FormSupplier() {
     setData({...data, [name]: value});
   }
 
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const dataToSend = {
+      ...data,
+      phone: Number(data.phone),
+      nit: Number(data.nit),
+    };
+    const validation = SendSupplierData(dataToSend);
+    if (validation) {
+      setData({
+        name: "",
+        phone: "",
+        direction: "",
+        nit: "",
+        email: "",
+        contact: "",
+      });
+    }
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <div>
         <h1 className="text-3xl">Register a new supplier</h1>
         <p className="text-base font-light">
-          You can search if the supplier already exist in the data table
+          You can search if the supplier already exists in the data table
         </p>
       </div>
       <hr />
-      <div className="self-start">
-        <Card className="w-full max-w-2xl mx-auto  dark:bg-transparent rounded-xl">
+      <div className="self-start w-full max-w-2xl mx-auto">
+        <Card className="dark:bg-transparent rounded-xl">
           <CardHeader>
             <CardTitle>Contact Information</CardTitle>
             <CardDescription>
@@ -56,11 +78,7 @@ export default function FormSupplier() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form
-              onSubmit={() => {
-                console.log(data);
-              }}
-            >
+            <form onSubmit={handleSubmit}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-2">
                   <Label htmlFor="name">Name</Label>
@@ -131,16 +149,17 @@ export default function FormSupplier() {
                   />
                 </div>
               </div>
+              <CardFooter className="px-0 pt-6">
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="w-full dark:bg-transparent !rounded-[8px] font-bold"
+                >
+                  Submit
+                </Button>
+              </CardFooter>
             </form>
           </CardContent>
-          <CardFooter>
-            <Button
-              variant={"outline"}
-              className="w-full dark:bg-transparent !rounded-[8px] font-bold  "
-            >
-              Submit
-            </Button>
-          </CardFooter>
         </Card>
       </div>
       <div>

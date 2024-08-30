@@ -143,9 +143,9 @@ async def add_new_user(supplier: model_suppplier):
         db = data_base()
         db.add_supplier(
             supplier.name,
-            supplier.phone,
+            int(supplier.phone),
             supplier.direction,
-            supplier.nit,
+            int(supplier.nit),
             supplier.email,
             supplier.contact
         )
