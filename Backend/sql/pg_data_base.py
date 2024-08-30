@@ -424,15 +424,23 @@ class data_base:
             self.logger.error(f"Error disabling user: {err}", exc_info=True)
             self.connect.rollback()
             raise
+    
+    def add_supplier(self, name: str, phone: int, direction: str, nit: int, email: str,contact: str):
+        try:
+            query = ("INSERT INTO public.suppliers (supplier_name,supplier_phone, supplier_direction, supplier_nit, supplier_email, supplier_contact)  VALUES(%s,%s,%s,%s,%s,%s)")
+            self.cursor.execute(query, (name, phone, direction, nit, email, contact))
+            self.connect.commit()
+        except psycopg2.Error as err:
+            self.logger.error(f"Error disabling user: {err}", exc_info=True)
+            self.connect.rollback()
+            raise
+
             
-            
-if __name__ == "__main__":
+if __name__ == "__main__":  pass
     # try:
     #     db = data_base()
-    #     # db.new_user(admin=True, email="admin@gmail.com", full_name="Alejandro", password="alecontra13", username="admin")
-    #     # pass
-    #     db.sale_products()
+    #     db.add_supplier("test", 123132123, "test", 12312312, "asdfasdf", "asdfasdf")
     # except Exception as e:
     #     print(e)
-    pass
+   
     

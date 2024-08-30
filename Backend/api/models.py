@@ -43,9 +43,10 @@ class User(BaseModel):
 class UserInDB(User):
     hashed_password: str
 
-# class ModelNewUser(BaseModel):
-#     username: str
-#     email: str 
-#     full_name: str 
-#     password: str
-#     disabled: bool | None = False
+class model_suppplier(BaseModel):
+    name: str
+    phone: int
+    direction: str 
+    nit: int
+    email: str
+    contact: str

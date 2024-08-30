@@ -135,3 +135,24 @@ async def update_user_password(username: Annotated[str, Form()], password: Annot
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
+    
+
+@router_methods.post("/add/supplier/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=model_suppplier)
+async def add_new_user(supplier: model_suppplier):
+    try:
+        db = data_base()
+        db.add_supplier(
+            supplier.name,
+            supplier.phone,
+            supplier.direction,
+            supplier.nit,
+            supplier.email,
+            supplier.contact
+        )
+        return supplier
+    except IntegrityError as e:
+        raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
+    except OperationalError as e:
+        raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
