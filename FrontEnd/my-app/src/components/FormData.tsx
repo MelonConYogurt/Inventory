@@ -36,7 +36,6 @@ import {
 } from "@/components/ui/command";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 
-import GetToken from "@/utils/auth";
 import SendData from "@/utils/SendProducts";
 import GetDataProducts from "@/utils/products";
 import {DataTable} from "./Data-table";
@@ -369,8 +368,10 @@ export default function Component() {
 
       <div className="mt-7">
         <div>
-          <h1 className="text-3xl">Actual products in inventory</h1>
-          <p className="text-base font-light mb-3">
+          <h2 className="text-2xl font-semibold tracking-tight mt-5">
+            Actual products in inventory
+          </h2>
+          <p className="text-muted-foreground mb-5">
             Search if the product already exist
           </p>
           <hr />

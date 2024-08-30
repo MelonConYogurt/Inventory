@@ -4,7 +4,7 @@ import {columns} from "./Columns-sale";
 import {DataTable} from "./Data-table-sale";
 import React, {useState, useEffect} from "react";
 import GetDataProducts from "@/utils/products";
-import GetToken from "@/utils/auth";
+import {Card, CardContent} from "@/components/ui/card";
 
 interface Product {
   id: string;
@@ -55,7 +55,11 @@ function Inventory() {
 
   return (
     <div>
-      <DataTable columns={columns} data={data} />
+      <Card className="dark:bg-transparent rounded-xl">
+        <CardContent>
+          <DataTable columns={columns} data={data} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

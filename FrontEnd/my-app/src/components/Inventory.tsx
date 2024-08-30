@@ -5,7 +5,15 @@ import {DataTable} from "./Data-table";
 import React, {useState, useEffect} from "react";
 import {ChartCategory} from "../components/ChartCategory";
 import GetDataProducts from "@/utils/products";
-import GetToken from "@/utils/auth";
+import {Package} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface Product {
   name: string;
@@ -55,8 +63,21 @@ function Inventory() {
 
   return (
     <div>
-      <div className="">
-        <DataTable columns={columns} data={data} />
+      <div className="mb-5">
+        <Card className="dark:bg-transparent rounded-xl">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Package className="w-6 h-6" />
+              <span>Supplier Database</span>
+            </CardTitle>
+            <CardDescription>
+              View and search for existing suppliers in the system
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DataTable columns={columns} data={data} />
+          </CardContent>
+        </Card>
       </div>
       <div className="w-auto h-auto">
         <ChartCategory />

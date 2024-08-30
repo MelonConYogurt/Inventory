@@ -73,7 +73,7 @@ export default function FormSupplier() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="space-y-10">
         <section className="space-y-6">
           <div className="space-y-2">
@@ -84,6 +84,7 @@ export default function FormSupplier() {
               Fill in the form below to add a new supplier to the system.
             </p>
           </div>
+          <hr />
           <Card className="border-2 shadow-lg dark:bg-transparent rounded-xl">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
@@ -195,6 +196,7 @@ export default function FormSupplier() {
               Search and manage your current supplier database.
             </p>
           </div>
+          <hr />
           <Card className="dark:bg-transparent rounded-xl">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">

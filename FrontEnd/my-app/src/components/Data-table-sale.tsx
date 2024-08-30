@@ -121,8 +121,10 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex flex-col gap-2 items-start mb-4 mt-4">
-        <h1 className="text-3xl">Inventory products</h1>
-        <p className="text-base font-light">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Inventory products
+        </h1>
+        <p className="text-muted-foreground">
           Select product and click in "Add to cart" to set the products for
           purchase
         </p>
@@ -275,17 +277,25 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
       <div className="flex flex-row gap-5 items-center mb-4 mt-4">
-        <h1 className="text-3xl font">Cart product list</h1>
+        <div className="mt-5">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Cart product list
+          </h1>
+          <p className="text-muted-foreground">
+            When you finish adding product click the button to generate the
+            invoice
+          </p>
+        </div>
         <Button
           variant={"outline"}
-          className="rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
+          className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
           onClick={() => console.log(productsSelect)}
         >
           Complete purchase
         </Button>
       </div>
       <hr />
-      <div>
+      <div className="mt-5">
         <Table>
           <TableHeader>
             <TableRow>
