@@ -138,7 +138,7 @@ async def update_user_password(username: Annotated[str, Form()], password: Annot
     
 
 @router_methods.post("/add/supplier/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=model_suppplier)
-async def add_new_user(supplier: model_suppplier):
+async def add_supplier(supplier: model_suppplier):
     try:
         db = data_base()
         db.add_supplier(
@@ -159,12 +159,13 @@ async def add_new_user(supplier: model_suppplier):
     
     
     
-@router_methods.post("/get/suppliers/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=list_suppliers)
-async def add_new_user():
+@router_methods.get("/get/suppliers/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=list_suppliers)
+async def get_suppliers_data():
     try:
         list = []
         db = data_base()
         data = db.get_suppliers()
+        print(data)
         for row in data:
             supplier = model_suppplier(
                 name = row[1],

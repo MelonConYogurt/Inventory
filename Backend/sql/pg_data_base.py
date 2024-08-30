@@ -439,7 +439,7 @@ class data_base:
         try:
             query = ("SELECT * FROM public.suppliers")
             self.cursor.execute(query)
-            data = self.cursor.fechall()
+            data = self.cursor.fetchall()
             if data:
                 return data
         except psycopg2.Error as err:

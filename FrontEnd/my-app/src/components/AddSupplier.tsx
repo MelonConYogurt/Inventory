@@ -13,8 +13,9 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {DataTable} from "./Data-table-supplier";
 import {columns} from "./Columns-suppliers";
-import {useState, FormEvent} from "react";
+import {useState, FormEvent, useEffect} from "react";
 import SendSupplierData from "@/utils/SendSupplier";
+import GetSuppliersData from "@/utils/Suppliers-data";
 
 interface Supplier {
   name: string;
@@ -26,6 +27,7 @@ interface Supplier {
 }
 
 export default function FormSupplier() {
+  const [tableData, setTableData] = useState([]);
   const [data, setData] = useState<Supplier>({
     name: "",
     phone: "",
@@ -35,6 +37,14 @@ export default function FormSupplier() {
     contact: "",
   });
 
+  useEffect(() => {
+    const suppliersData = GetSuppliersData();
+
+    if (suppliersData) {
+      setTableData(suppliersData);
+    }
+  }, []);
+  1;
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const {name, value} = e.target;
     setData({...data, [name]: value});
@@ -169,7 +179,7 @@ export default function FormSupplier() {
         </Card>
       </div>
       <div>
-        <DataTable columns={columns} data={[]} />
+        <DataTable columns={columns} data={tableData} />
       </div>
     </div>
   );
