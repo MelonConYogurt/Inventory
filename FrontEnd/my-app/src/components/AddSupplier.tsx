@@ -16,6 +16,7 @@ import {columns} from "./Columns-suppliers";
 import {useState, FormEvent, useEffect} from "react";
 import SendSupplierData from "@/utils/SendSupplier";
 import GetSuppliersData from "@/utils/Suppliers-data";
+import {UserPlus, Search} from "lucide-react";
 
 interface Supplier {
   name: string;
@@ -27,6 +28,7 @@ interface Supplier {
 }
 
 export default function FormSupplier() {
+  const inputClasses = "dark:bg-transparent !rounded-[8px]";
   const [tableData, setTableData] = useState([]);
   const [data, setData] = useState<Supplier>({
     name: "",
@@ -71,124 +73,143 @@ export default function FormSupplier() {
   }
 
   return (
-    <div className="flex flex-col gap-">
-      <div className="mb-">
-        <h1 className="text-3xl">Register a new supplier</h1>
-        <p className="text-base font-light">
-          You can search if the supplier already exists in the data table
-        </p>
-      </div>
-      <hr />
-      <div className="self-start w-full max-w-2xl mx-auto mb-5 mt-5">
-        <Card className="dark:bg-transparent rounded-xl">
-          <CardHeader>
-            <CardTitle>Contact Information</CardTitle>
-            <CardDescription>
-              Please fill in your contact details
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    placeholder="Enter your name"
-                    className="dark:bg-transparent !rounded-[8px]"
-                    value={data.name}
-                    onChange={handleChange}
-                    required
-                  />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="space-y-10">
+        <section className="space-y-6">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold tracking-tight">
+              Register a new supplier
+            </h1>
+            <p className="text-muted-foreground">
+              Fill in the form below to add a new supplier to the system.
+            </p>
+          </div>
+          <Card className="border-2 shadow-lg dark:bg-transparent rounded-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <UserPlus className="w-6 h-6" />
+                <span>Supplier Information</span>
+              </CardTitle>
+              <CardDescription>
+                Please provide the supplier's contact details
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Company Name</Label>
+                    <Input
+                      className={inputClasses}
+                      id="name"
+                      name="name"
+                      placeholder="Enter company name"
+                      value={data.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <Input
+                      className={inputClasses}
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="Enter phone number"
+                      value={data.phone}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2 sm:col-span-2">
+                    <Label htmlFor="direction">Address</Label>
+                    <Input
+                      className={inputClasses}
+                      id="direction"
+                      name="direction"
+                      placeholder="Enter company address"
+                      value={data.direction}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="nit">NIT (Tax ID)</Label>
+                    <Input
+                      className={inputClasses}
+                      id="nit"
+                      name="nit"
+                      placeholder="Enter NIT"
+                      value={data.nit}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                      className={inputClasses}
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="Enter email address"
+                      value={data.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2 sm:col-span-2">
+                    <Label htmlFor="contact">Contact Person</Label>
+                    <Input
+                      className={inputClasses}
+                      id="contact"
+                      name="contact"
+                      placeholder="Enter contact person's name"
+                      value={data.contact}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    placeholder="Enter your phone number"
-                    className="dark:bg-transparent !rounded-[8px]"
-                    value={data.phone}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2 sm:col-span-2">
-                  <Label htmlFor="direction">Direction</Label>
-                  <Input
-                    id="direction"
-                    name="direction"
-                    placeholder="Enter your address"
-                    className="dark:bg-transparent !rounded-[8px]"
-                    value={data.direction}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="nit">NIT</Label>
-                  <Input
-                    id="nit"
-                    name="nit"
-                    placeholder="Enter your NIT"
-                    className="dark:bg-transparent !rounded-[8px]"
-                    value={data.nit}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    className="dark:bg-transparent !rounded-[8px]"
-                    value={data.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2 sm:col-span-2">
-                  <Label htmlFor="contact">Contact Name</Label>
-                  <Input
-                    id="contact"
-                    name="contact"
-                    placeholder="Enter contact person's name"
-                    className="dark:bg-transparent !rounded-[8px]"
-                    value={data.contact}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-              <CardFooter className="px-0 pt-6">
-                <Button
-                  type="submit"
-                  variant="outline"
-                  className="w-full dark:bg-transparent !rounded-[8px] font-bold"
-                >
-                  Submit
-                </Button>
-              </CardFooter>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="mt-5">
-        <div>
-          <h1 className="text-3xl">Register a new supplier</h1>
-          <p className="text-base font-light">
-            You can search if the supplier already exists in the data table
-          </p>
-        </div>
-        <hr />
-        <div className="mb-5 mt-5">
-          <DataTable columns={columns} data={tableData} />
-        </div>
+                <CardFooter className="px-0 pt-6">
+                  <Button
+                    variant={"outline"}
+                    type="submit"
+                    className="w-full dark:bg-transparent rounded-xl font-bold"
+                  >
+                    Register Supplier
+                  </Button>
+                </CardFooter>
+              </form>
+            </CardContent>
+          </Card>
+        </section>
+
+        <section className="space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Existing Suppliers
+            </h2>
+            <p className="text-muted-foreground">
+              Search and manage your current supplier database.
+            </p>
+          </div>
+          <Card className="dark:bg-transparent rounded-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Search className="w-6 h-6" />
+                <span>Supplier Database</span>
+              </CardTitle>
+              <CardDescription>
+                View and search for existing suppliers in the system
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <DataTable columns={columns} data={tableData} />
+            </CardContent>
+          </Card>
+        </section>
       </div>
     </div>
   );
