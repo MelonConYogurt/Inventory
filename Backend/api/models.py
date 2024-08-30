@@ -50,3 +50,6 @@ class model_suppplier(BaseModel):
     nit: int
     email: str
     contact: str
+    
+class list_suppliers(BaseModel):
+    suppliers: List[model_suppplier]

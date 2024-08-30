@@ -434,7 +434,19 @@ class data_base:
             self.logger.error(f"Error disabling user: {err}", exc_info=True)
             self.connect.rollback()
             raise
-
+        
+    def get_suppliers(self):
+        try:
+            query = ("SELECT * FROM public.suppliers")
+            self.cursor.execute(query)
+            data = self.cursor.fechall()
+            if data:
+                return data
+        except psycopg2.Error as err:
+            self.logger.error(f"Error disabling user: {err}", exc_info=True)
+            self.connect.rollback()
+            raise
+            
             
 if __name__ == "__main__":  pass
     # try:

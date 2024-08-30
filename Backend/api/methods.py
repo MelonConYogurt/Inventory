@@ -156,3 +156,29 @@ async def add_new_user(supplier: model_suppplier):
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
+    
+    
+    
+@router_methods.post("/get/suppliers/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=list_suppliers)
+async def add_new_user():
+    try:
+        list = []
+        db = data_base()
+        data = db.get_suppliers()
+        for row in data:
+            supplier = model_suppplier(
+                name = row[1],
+                phone = row[2],
+                direction = row[3],
+                nit = row[4],
+                email =row[5],
+                contact =row[6]
+            )
+            list.append(supplier)
+        return list
+    except IntegrityError as e:
+        raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
+    except OperationalError as e:
+        raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
