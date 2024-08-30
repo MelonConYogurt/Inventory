@@ -87,6 +87,7 @@ export default function FormSupplier() {
                     name="name"
                     placeholder="Enter your name"
                     className="dark:bg-transparent !rounded-[8px]"
+                    value={data.name}
                     onChange={handleChange}
                     required
                   />
@@ -99,6 +100,7 @@ export default function FormSupplier() {
                     type="tel"
                     placeholder="Enter your phone number"
                     className="dark:bg-transparent !rounded-[8px]"
+                    value={data.phone}
                     onChange={handleChange}
                     required
                   />
@@ -110,6 +112,7 @@ export default function FormSupplier() {
                     name="direction"
                     placeholder="Enter your address"
                     className="dark:bg-transparent !rounded-[8px]"
+                    value={data.direction}
                     onChange={handleChange}
                     required
                   />
@@ -121,6 +124,7 @@ export default function FormSupplier() {
                     name="nit"
                     placeholder="Enter your NIT"
                     className="dark:bg-transparent !rounded-[8px]"
+                    value={data.nit}
                     onChange={handleChange}
                     required
                   />
@@ -133,6 +137,7 @@ export default function FormSupplier() {
                     type="email"
                     placeholder="Enter your email"
                     className="dark:bg-transparent !rounded-[8px]"
+                    value={data.email}
                     onChange={handleChange}
                     required
                   />
@@ -144,6 +149,7 @@ export default function FormSupplier() {
                     name="contact"
                     placeholder="Enter contact person's name"
                     className="dark:bg-transparent !rounded-[8px]"
+                    value={data.contact}
                     onChange={handleChange}
                     required
                   />
