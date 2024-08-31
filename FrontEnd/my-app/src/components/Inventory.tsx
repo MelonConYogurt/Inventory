@@ -5,7 +5,8 @@ import {DataTable} from "./Data-table";
 import React, {useState, useEffect} from "react";
 import {ChartCategory} from "../components/ChartCategory";
 import GetDataProducts from "@/utils/products";
-import {Package} from "lucide-react";
+import {Package, RefreshCcw} from "lucide-react";
+import {Button} from "./ui/button";
 import {
   Card,
   CardContent,
@@ -28,6 +29,7 @@ function Inventory() {
   const [data, setData] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [refresh, setRefresh] = useState<number>(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +53,7 @@ function Inventory() {
     }
 
     fetchData();
-  }, []);
+  }, [refresh]);
 
   if (loading)
     return (
@@ -75,6 +77,15 @@ function Inventory() {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            <Button
+              variant={"outline"}
+              className="rounded-full dark: bg-transparent"
+              onClick={() => {
+                setRefresh((prev) => prev + 1);
+              }}
+            >
+              <RefreshCcw></RefreshCcw>
+            </Button>
             <DataTable columns={columns} data={data} />
           </CardContent>
         </Card>

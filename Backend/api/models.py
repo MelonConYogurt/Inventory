@@ -21,7 +21,6 @@ class model_product_not_id(BaseModel):
 class InvoiceResponse(BaseModel):
     products : List[model_product]
     
-    
 class InvoiceResponse_not_id(BaseModel):
     products : List[model_product_not_id]
 

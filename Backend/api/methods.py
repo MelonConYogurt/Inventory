@@ -158,7 +158,6 @@ async def add_supplier(supplier: model_suppplier):
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
     
     
-    
 @router_methods.get("/get/suppliers/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=list_suppliers)
 async def get_suppliers_data():
     try:
