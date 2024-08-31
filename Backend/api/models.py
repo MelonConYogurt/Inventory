@@ -9,9 +9,21 @@ class model_product(BaseModel):
     quantity: int
     category: str | None = None
     description: str | None = None
+    
+class model_product_not_id(BaseModel):
+    name: str
+    price: float
+    code: int
+    quantity: int
+    category: str | None = None
+    description: str | None = None
 
 class InvoiceResponse(BaseModel):
     products : List[model_product]
+    
+    
+class InvoiceResponse_not_id(BaseModel):
+    products : List[model_product_not_id]
 
 class ProductQuantity(BaseModel):
     product_name: str

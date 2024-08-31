@@ -73,12 +73,12 @@ async def add_new_product(product: model_product):
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while adding the product: {str(e)}")
 
 
-@router_methods.post("/add/multiple/products", response_model=InvoiceResponse, tags=["Inventory"])
-async def add_new_products(products: List[model_product]):
+@router_methods.post("/add/multiple/products", response_model=InvoiceResponse_not_id, tags=["Inventory"])
+async def add_new_products(products: List[model_product_not_id]):
     try:
         db = data_base()
         db.insert_list_products(products)
-        return InvoiceResponse(products=products)
+        return InvoiceResponse_not_id(products=products)
     except IntegrityError as e:
         raise HTTPException(status_code=400, detail="Integrity error: One or more products have duplicate codes.")
     except OperationalError as e:
