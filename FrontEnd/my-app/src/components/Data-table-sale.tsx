@@ -35,6 +35,8 @@ import {
   TableFooter,
 } from "@/components/ui/table";
 
+import {ScrollArea} from "@/components/ui/scroll-area";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -308,38 +310,40 @@ export function DataTable<TData, TValue>({
               <TableHead>Amount</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {productsSelect.map((row, index) => {
-              const formattedPrice = new Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
-              }).format(row.price);
+          <ScrollArea className="h-[50vh]">
+            <TableBody>
+              {productsSelect.map((row, index) => {
+                const formattedPrice = new Intl.NumberFormat("es-CO", {
+                  style: "currency",
+                  currency: "COP",
+                }).format(row.price);
 
-              const formattedAmount = new Intl.NumberFormat("es-CO", {
-                style: "currency",
-                currency: "COP",
-              }).format(row.price * row.quantity);
+                const formattedAmount = new Intl.NumberFormat("es-CO", {
+                  style: "currency",
+                  currency: "COP",
+                }).format(row.price * row.quantity);
 
-              return (
-                <TableRow key={index}>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{formattedPrice}</TableCell>
-                  <TableCell>{row.code}</TableCell>
-                  <TableCell>
-                    <Input
-                      type="number"
-                      placeholder="0"
-                      onChange={(e) => handleQuantity(e, index)}
-                      className="rounded-xl dark: bg-transparent w-auto"
-                    ></Input>
-                  </TableCell>
-                  <TableCell>{row.category}</TableCell>
-                  <TableCell>{row.description}</TableCell>
-                  <TableCell>{formattedAmount}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
+                return (
+                  <TableRow key={index}>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{formattedPrice}</TableCell>
+                    <TableCell>{row.code}</TableCell>
+                    <TableCell>
+                      <Input
+                        type="number"
+                        placeholder="0"
+                        onChange={(e) => handleQuantity(e, index)}
+                        className="rounded-xl dark: bg-transparent w-auto"
+                      ></Input>
+                    </TableCell>
+                    <TableCell>{row.category}</TableCell>
+                    <TableCell>{row.description}</TableCell>
+                    <TableCell>{formattedAmount}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </ScrollArea>
           <TableFooter>
             <TableRow>
               <TableCell colSpan={6}>Total</TableCell>
