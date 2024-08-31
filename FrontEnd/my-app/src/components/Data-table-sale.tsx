@@ -5,6 +5,8 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {toast, Toaster} from "sonner";
 
+import {ScrollArea} from "@/components/ui/scroll-area";
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -34,8 +36,6 @@ import {
   TableRow,
   TableFooter,
 } from "@/components/ui/table";
-
-import {ScrollArea} from "@/components/ui/scroll-area";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -298,19 +298,19 @@ export function DataTable<TData, TValue>({
       </div>
       <hr />
       <div className="mt-5">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>Code</TableHead>
-              <TableHead>Quantity</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <ScrollArea className="h-[50vh]">
+        <ScrollArea className="h-[400px]">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>Code</TableHead>
+                <TableHead>Quantity</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Amount</TableHead>
+              </TableRow>
+            </TableHeader>
             <TableBody>
               {productsSelect.map((row, index) => {
                 const formattedPrice = new Intl.NumberFormat("es-CO", {
@@ -343,19 +343,19 @@ export function DataTable<TData, TValue>({
                 );
               })}
             </TableBody>
-          </ScrollArea>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={6}>Total</TableCell>
-              <TableCell>
-                {new Intl.NumberFormat("es-CO", {
-                  style: "currency",
-                  currency: "COP",
-                }).format(totalAmount)}
-              </TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={6}>Total</TableCell>
+                <TableCell>
+                  {new Intl.NumberFormat("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                  }).format(totalAmount)}
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </ScrollArea>
       </div>
       <div>
         <Toaster richColors />
