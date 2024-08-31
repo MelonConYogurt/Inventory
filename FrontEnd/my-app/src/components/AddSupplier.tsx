@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {DataTable} from "./Data-table-supplier";
@@ -17,6 +18,7 @@ import {useState, FormEvent, useEffect} from "react";
 import SendSupplierData from "@/utils/SendSupplier";
 import GetSuppliersData from "@/utils/Suppliers-data";
 import {UserPlus, Search, RefreshCcw} from "lucide-react";
+import {toast, Toaster} from "sonner";
 
 interface Supplier {
   name: string;
@@ -30,7 +32,7 @@ interface Supplier {
 export default function FormSupplier() {
   const inputClasses = "dark:bg-transparent !rounded-[8px]";
   const [tableData, setTableData] = useState([]);
-  const [refresh, setRefresh] = useState<Number>(0);
+  const [refresh, setRefresh] = useState<number>(0);
   const [data, setData] = useState<Supplier>({
     name: "",
     phone: "",
@@ -62,6 +64,10 @@ export default function FormSupplier() {
     };
     const validation = SendSupplierData(dataToSend);
     if (validation) {
+      toast.success("supplier added to database", {
+        position: "bottom-left",
+        duration: 5000,
+      });
       setData({
         name: "",
         phone: "",
@@ -75,6 +81,9 @@ export default function FormSupplier() {
 
   return (
     <div className="mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div>
+        <Toaster richColors />
+      </div>
       <div className="space-y-10">
         <section className="space-y-6">
           <div className="space-y-2">
@@ -214,6 +223,10 @@ export default function FormSupplier() {
                 className="rounded-full dark:bg-transparent"
                 onClick={() => {
                   setRefresh((prev) => prev + 1);
+                  toast.success("Data reloaded", {
+                    position: "bottom-left",
+                    duration: 5000,
+                  });
                 }}
               >
                 <RefreshCcw></RefreshCcw>

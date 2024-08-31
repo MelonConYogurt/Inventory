@@ -40,6 +40,7 @@ import SendData from "@/utils/SendProducts";
 import GetDataProducts from "@/utils/products";
 import {DataTable} from "./Data-table";
 import {columns} from "./Columns";
+import {RefreshCcw} from "lucide-react";
 
 const inputClasses = "dark:bg-transparent !rounded-[8px]";
 
@@ -66,6 +67,7 @@ export default function Component() {
   const [data, setData] = useState<Product[]>([]);
   const [open, setOpen] = React.useState(false);
   const [CategoryValue, setCategoryValue] = React.useState("");
+  const [refresh, setRefresh] = useState<number>(0);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -82,6 +84,7 @@ export default function Component() {
     console.log(CategoryValue);
     console.log(updatedFormValues);
     setProducts((prevProducts) => [...prevProducts, updatedFormValues]);
+
     setCategoryValue("");
     setFormValues({
       name: "",
@@ -94,7 +97,6 @@ export default function Component() {
   }
 
   async function handleCreatedProducts() {
-    console.log(products);
     const updatedProducts = products.map((product) => ({
       name: product.name,
       price: parseFloat(product.price),
@@ -110,7 +112,16 @@ export default function Component() {
         console.log(updatedProducts);
         const validation = await SendData(updatedProducts);
         if (validation === true) {
+          toast.success("product added to database", {
+            position: "bottom-left",
+            duration: 5000,
+          });
           setProducts([]);
+        } else {
+          toast.error("Fail will adding the products to the database", {
+            position: "bottom-left",
+            duration: 5000,
+          });
         }
       } catch (error) {
         console.error("Error sending data:", error);
@@ -138,7 +149,7 @@ export default function Component() {
       }
     }
     fetchData();
-  }, []);
+  }, [refresh]);
 
   const categoryValues = [
     {
@@ -176,6 +187,7 @@ export default function Component() {
       <div>
         <Toaster richColors />
       </div>
+
       <div className="flex flex-row gap-5">
         <div className="w-1/3">
           <Card className="dark:bg-transparent rounded-xl ">
@@ -374,8 +386,23 @@ export default function Component() {
           <p className="text-muted-foreground mb-5">
             Search if the product already exist
           </p>
+          <Button
+            variant={"outline"}
+            className="mb-5 rounded-full dark:bg-transparent"
+            onClick={() => {
+              setRefresh((prev) => prev + 1);
+              toast.success("Data reloaded", {
+                position: "bottom-left",
+                duration: 5000,
+              });
+            }}
+          >
+            <RefreshCcw></RefreshCcw>
+          </Button>
+
           <hr />
         </div>
+
         <DataTable columns={columns} data={data}></DataTable>
       </div>
     </div>
