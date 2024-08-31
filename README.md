@@ -1,5 +1,7 @@
 # inventory-app-2.0.0
 
+<iframe width="2379" height="970" src="https://www.youtube.com/embed/o_4IJ4fPeyc" title="demo inventory app 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 # Proyecto: Sistema de Gestión de Productos con Código de Barras y QR
 
 Este proyecto consta de varios módulos clave: escaneo de códigos de barras y QR, generación de códigos (EAN13 y QR), gestión de productos en una base de datos, modelos de datos y métodos para la interacción vía API. A continuación, se describen cada uno de los módulos y su funcionalidad.
@@ -162,13 +164,6 @@ async def add_new_product(product: model_product):
 
 ## Vistas
 
-### Agregar varios productos
-
-![image](https://github.com/user-attachments/assets/bb0a72c3-7c6a-4796-b33c-ec4f8b7e95bf)
-
-### Agregar un solo producto
-
-![image](https://github.com/user-attachments/assets/9a05f005-3b9b-4672-aabb-b816d46f2d25)
 
 ## Uso
 
