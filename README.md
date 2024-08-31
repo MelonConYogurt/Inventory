@@ -1,6 +1,6 @@
 # inventory-app-2.0.0
 
-<iframe width="2379" height="970" src="https://www.youtube.com/embed/o_4IJ4fPeyc" title="demo inventory app 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 # Proyecto: Sistema de Gestión de Productos con Código de Barras y QR
 
