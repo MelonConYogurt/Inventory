@@ -297,65 +297,89 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
       <hr />
-      <div className="mt-5">
-        <ScrollArea className="h-[400px]">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Code</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {productsSelect.map((row, index) => {
-                const formattedPrice = new Intl.NumberFormat("es-CO", {
-                  style: "currency",
-                  currency: "COP",
-                }).format(row.price);
+      <div className="mt-5 border rounded-md">
+        <div className="flex flex-col">
+          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+              <div className="overflow-hidden">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[200px]">Name</TableHead>
+                      <TableHead className="w-[100px]">Price</TableHead>
+                      <TableHead className="w-[100px]">Code</TableHead>
+                      <TableHead className="w-[100px]">Quantity</TableHead>
+                      <TableHead className="w-[150px]">Category</TableHead>
+                      <TableHead className="w-[200px]">Description</TableHead>
+                      <TableHead className="w-[150px]">Amount</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                </Table>
+                <ScrollArea className="h-[600px]">
+                  <Table>
+                    <TableBody>
+                      {productsSelect.map((row, index) => {
+                        const formattedPrice = new Intl.NumberFormat("es-CO", {
+                          style: "currency",
+                          currency: "COP",
+                        }).format(row.price);
 
-                const formattedAmount = new Intl.NumberFormat("es-CO", {
-                  style: "currency",
-                  currency: "COP",
-                }).format(row.price * row.quantity);
+                        const formattedAmount = new Intl.NumberFormat("es-CO", {
+                          style: "currency",
+                          currency: "COP",
+                        }).format(row.price * row.quantity);
 
-                return (
-                  <TableRow key={index}>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{formattedPrice}</TableCell>
-                    <TableCell>{row.code}</TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        placeholder="0"
-                        onChange={(e) => handleQuantity(e, index)}
-                        className="rounded-xl dark: bg-transparent w-auto"
-                      ></Input>
-                    </TableCell>
-                    <TableCell>{row.category}</TableCell>
-                    <TableCell>{row.description}</TableCell>
-                    <TableCell>{formattedAmount}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={6}>Total</TableCell>
-                <TableCell>
-                  {new Intl.NumberFormat("es-CO", {
-                    style: "currency",
-                    currency: "COP",
-                  }).format(totalAmount)}
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </ScrollArea>
+                        return (
+                          <TableRow key={index}>
+                            <TableCell className="w-[200px]">
+                              {row.name}
+                            </TableCell>
+                            <TableCell className="w-[100px]">
+                              {formattedPrice}
+                            </TableCell>
+                            <TableCell className="w-[100px]">
+                              {row.code}
+                            </TableCell>
+                            <TableCell className="w-[100px]">
+                              <Input
+                                type="number"
+                                placeholder="0"
+                                onChange={(e) => handleQuantity(e, index)}
+                                className="rounded-xl dark:bg-transparent w-auto"
+                              />
+                            </TableCell>
+                            <TableCell className="w-[150px]">
+                              {row.category}
+                            </TableCell>
+                            <TableCell className="w-[200px]">
+                              {row.description}
+                            </TableCell>
+                            <TableCell className="w-[150px]">
+                              {formattedAmount}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </ScrollArea>
+                <Table>
+                  <TableFooter>
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center font-bold">
+                        Total:{" "}
+                        {new Intl.NumberFormat("es-CO", {
+                          style: "currency",
+                          currency: "COP",
+                        }).format(totalAmount)}
+                      </TableCell>
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div>
         <Toaster richColors />
