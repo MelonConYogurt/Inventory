@@ -16,7 +16,7 @@ import {columns} from "./Columns-suppliers";
 import {useState, FormEvent, useEffect} from "react";
 import SendSupplierData from "@/utils/SendSupplier";
 import GetSuppliersData from "@/utils/Suppliers-data";
-import {UserPlus, Search} from "lucide-react";
+import {UserPlus, Search, RefreshCcw} from "lucide-react";
 
 interface Supplier {
   name: string;
@@ -30,6 +30,7 @@ interface Supplier {
 export default function FormSupplier() {
   const inputClasses = "dark:bg-transparent !rounded-[8px]";
   const [tableData, setTableData] = useState([]);
+  const [refresh, setRefresh] = useState<Number>(0);
   const [data, setData] = useState<Supplier>({
     name: "",
     phone: "",
@@ -45,7 +46,7 @@ export default function FormSupplier() {
       setTableData(suppliersData);
     }
     fetchSuppliers();
-  }, []);
+  }, [refresh]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const {name, value} = e.target;
@@ -208,6 +209,15 @@ export default function FormSupplier() {
               </CardDescription>
             </CardHeader>
             <CardContent>
+              <Button
+                variant={"outline"}
+                className="rounded-full dark:bg-transparent"
+                onClick={() => {
+                  setRefresh((prev) => prev + 1);
+                }}
+              >
+                <RefreshCcw></RefreshCcw>
+              </Button>
               <DataTable columns={columns} data={tableData} />
             </CardContent>
           </Card>
