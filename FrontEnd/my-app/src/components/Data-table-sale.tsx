@@ -4,7 +4,7 @@ import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {toast, Toaster} from "sonner";
-
+import SaleProdcuts from "@/utils/SaleProducts";
 import {ScrollArea} from "@/components/ui/scroll-area";
 
 import {
@@ -291,7 +291,10 @@ export function DataTable<TData, TValue>({
         <Button
           variant={"outline"}
           className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
-          onClick={() => console.log(productsSelect)}
+          onClick={() => {
+            console.log(productsSelect);
+            SaleProdcuts(productsSelect);
+          }}
         >
           Complete purchase
         </Button>

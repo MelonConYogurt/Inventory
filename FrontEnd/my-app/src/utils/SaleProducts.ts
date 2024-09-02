@@ -8,7 +8,7 @@ interface Product {
   description: string;
 }
 
-async function SaLeProdcuts(data: Product[]) {
+async function SaleProdcuts(data: Product[]) {
   try {
     const formatData = {
       products: data,
@@ -25,3 +25,5 @@ async function SaLeProdcuts(data: Product[]) {
     });
   } catch (error) {}
 }
+
+export default SaleProdcuts;
