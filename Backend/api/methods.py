@@ -182,3 +182,16 @@ async def get_suppliers_data():
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
+    
+    
+@router_methods.post("/sale/products/", tags=["Inventory"], dependencies=[Depends(get_current_admin_active_user)], response_model=InvoiceResponse)
+async def sale_products(products: InvoiceResponse):
+    try:
+        db = data_base()
+        db.sale_product_manual(products)
+    except IntegrityError as e:
+        raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
+    except OperationalError as e:
+        raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")

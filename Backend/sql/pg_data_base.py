@@ -191,17 +191,40 @@ class data_base:
         finally:
             self.connect.autocommit = True
             
-    def sale_product_manual(self, ):
+    def sale_product_manual(self, products: list):
+        self.connect.autocommit = False
         try:
-            pass
+            valid_products = [product for product in products if self.search_products(product)[0]]
+            if not valid_products:
+                raise ValueError("No valid products found")
+            
+            # sale_id = self.sale()  
+            # if not sale_id:
+            #     raise ValueError("Failed to create sale")
+            
+            for product in products:
+                print(product)
+            #     product_data = {
+            #         "product_id": product[1][0],
+            #         "product_name": product[1][1],
+            #         "product_price": product[1][2],
+            #         "product_code": product[1][3],
+            #         "product_quantity": product
+            #     }
+            #     query = "INSERT INTO public.sale_products (sale_id, product_id, quantity, product_price_at_sale) VALUES (%s, %s, %s, %s) RETURNING *"
+            #     values = (sale_id, product_data["product_id"], product_data["product_quantity"], product_data["product_price"])
+            #     self.cursor.execute(query, values)
+            #     sale_item_data = self.cursor.fetchone()
+            #     print(f"Sale product: {sale_item_data}")
+            #     self.delete_products(code=product_data["product_code"], quantity=product_data["product_quantity"])
+        
+            # self.connect.commit()            
         except psycopg2.Error as err:
             self.logger.error(f"Error creating new user: {err}", exc_info=True)
             self.connect.rollback()
             raise
-                
-            
-        
-
+        finally:
+            self.connect.autocommit = True
     
     def update_product_data(self,
                         name: str | None = None,

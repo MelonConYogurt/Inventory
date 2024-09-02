@@ -1,5 +1,3 @@
-"use client";
-
 async function SendData(products: any[]) {
   let formatProducts: any[] = [];
 
