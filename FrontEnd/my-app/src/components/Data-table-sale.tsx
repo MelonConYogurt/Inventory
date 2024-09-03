@@ -80,7 +80,7 @@ export function DataTable<TData, TValue>({
       if (updateList[rowKey]) {
         updateList[rowKey] = {
           ...updateList[rowKey],
-          quantity: value,
+          quantity: parseInt(value),
         };
       }
       setProductsSelect(updateList);
@@ -156,6 +156,7 @@ export function DataTable<TData, TValue>({
                   return {
                     ...row.original,
                     quantity: 0,
+                    id: parseInt(row.original.id),
                   };
                 });
 
