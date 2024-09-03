@@ -293,11 +293,16 @@ export function DataTable<TData, TValue>({
           variant={"outline"}
           className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
           onClick={() => {
-            console.log(productsSelect);
             SaleProdcuts(productsSelect);
           }}
         >
           Complete purchase
+        </Button>
+        <Button
+          variant={"outline"}
+          className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
+        >
+          Cancel
         </Button>
       </div>
       <hr />
