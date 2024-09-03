@@ -104,7 +104,7 @@ export function DataTable<TData, TValue>({
     }
   }
 
-  function handleSubmit(products) {
+  function handleSubmit(products: any) {
     SaleProducts(products);
     setProductsSelect([]);
     toast.success("Sale successfully", {
