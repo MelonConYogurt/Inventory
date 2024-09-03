@@ -1,6 +1,7 @@
-# inventory-app-2.0.0
+# Inventory
 
 
+[![Alt text](https://github.com/user-attachments/assets/f9bc2234-428c-4f4d-a143-9dfe22730ddc)](https://youtu.be/o_4IJ4fPeyc)
 
 # Proyecto: Sistema de Gestión de Productos con Código de Barras y QR
 
