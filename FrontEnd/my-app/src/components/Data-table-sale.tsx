@@ -37,7 +37,6 @@ import {
   TableRow,
   TableFooter,
 } from "@/components/ui/table";
-import {list} from "postcss";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -107,6 +106,11 @@ export function DataTable<TData, TValue>({
 
   function handleSubmit(products) {
     SaleProducts(products);
+    setProductsSelect([]);
+    toast.success("Sale successfully", {
+      position: "bottom-left",
+      duration: 5000,
+    });
   }
 
   useEffect(() => {

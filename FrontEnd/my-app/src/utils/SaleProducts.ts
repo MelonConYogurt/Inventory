@@ -1,5 +1,6 @@
 interface Product {
-  id: string;
+  id: number;
+  units: number;
   name: string;
   price: number;
   code: string;
@@ -10,9 +11,11 @@ interface Product {
 
 async function SaleProducts(data: Product[]) {
   try {
-    console.log("Estamos en la funcion");
-    console.log(data);
     const token = sessionStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token no found close the app and re login");
+    }
+
     const response = await fetch("http://127.0.0.1:8000/sale/products/", {
       method: "POST",
       headers: {
@@ -21,7 +24,19 @@ async function SaleProducts(data: Product[]) {
       },
       body: JSON.stringify(data),
     });
-  } catch (error) {}
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Error en la solicitud: ${errorData.message || response.statusText}`
+      );
+    }
+
+    const responseData = await response.json();
+    console.log("Respuesta del servidor:", responseData);
+  } catch (error) {
+    console.error("Error al realizar la venta de productos:", error);
+  }
 }
 
 export default SaleProducts;

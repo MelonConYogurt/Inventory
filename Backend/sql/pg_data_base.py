@@ -30,7 +30,7 @@ class data_base:
             self.cursor = self.connect.cursor()
             print("Connected to the database")
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
     
@@ -56,7 +56,7 @@ class data_base:
                 self.connect.commit()
                 print(f"Product eliminated:\n {delete_info}")
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise        
     
@@ -73,7 +73,7 @@ class data_base:
                 print("Product not found")
                 return False, None
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
         
@@ -98,7 +98,7 @@ class data_base:
             return data_insert
 
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
 
@@ -122,7 +122,7 @@ class data_base:
                     self.cursor.execute(query, values)
                     return True
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
 
@@ -146,7 +146,7 @@ class data_base:
             sale_id = self.cursor.fetchone()[0]  
             return sale_id
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
 
@@ -185,7 +185,7 @@ class data_base:
         
             self.connect.commit()            
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
         finally:
@@ -206,6 +206,14 @@ class data_base:
                     else:
                         fail_to_validate.append(product)
                 
+                if len(validate_products) <= 0:
+                    query = ("DELETE FROM public.sales WHERE sale_id = %s")
+                    values = (sale_id,)
+                    self.cursor.execute(query, values)
+                    self.logger.error(f"Error: {err}", exc_info=True)
+                    self.connect.rollback()
+                    raise
+                
                 for product in validate_products:
                     sale_total += product.price * product.units
                     query = "INSERT INTO public.sale_products (sale_id, product_id, quantity, product_price_at_sale) VALUES (%s, %s, %s, %s) RETURNING *"
@@ -222,7 +230,7 @@ class data_base:
             query = ("DELETE FROM public.sales WHERE sale_id = %s")
             values = (sale_id,)
             self.cursor.execute(query, values)
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error: {err}", exc_info=True)
             self.connect.rollback()
             raise
         finally:
@@ -273,7 +281,7 @@ class data_base:
             print(f"Product updated successfully: {product_update_data}")
         
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
       
@@ -288,7 +296,7 @@ class data_base:
             else:
                 raise
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
         
@@ -304,7 +312,7 @@ class data_base:
                     description=faker.sentence(nb_words=3, variable_nb_words=False)
                 )
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
             
@@ -322,7 +330,7 @@ class data_base:
                     description = product.description
                 )
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise   
         
@@ -394,7 +402,7 @@ class data_base:
             self.cursor.execute(query, values)
             self.connect.commit()
         except psycopg2.Error as err:
-            self.logger.error(f"Error creating new user: {err}", exc_info=True)
+            self.logger.error(f"Error : {err}", exc_info=True)
             self.connect.rollback()
             raise
         
