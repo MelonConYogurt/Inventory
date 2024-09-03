@@ -128,8 +128,8 @@ export function DataTable<TData, TValue>({
           Inventory products
         </h1>
         <p className="text-muted-foreground">
-          Select product and click in "Add to cart" to set the products for
-          purchase
+          Select product and click in &quot;Add to cart&quot; to set the
+          products for purchase
         </p>
       </div>
       <hr />
