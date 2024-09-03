@@ -70,9 +70,12 @@ export function DataTable<TData, TValue>({
   ) {
     const value = e.target.value;
     const rowKey = rowIndex;
+    console.log(e.target.value, rowKey);
 
     const row = data[rowKey];
+    console.log(row);
     const quantityAvailable = row.quantity;
+    console.log(quantityAvailable);
 
     if (value <= quantityAvailable) {
       const updateList = [...productsSelect];
@@ -127,8 +130,8 @@ export function DataTable<TData, TValue>({
           Inventory products
         </h1>
         <p className="text-muted-foreground">
-          Select product and click in "Add to cart" to set the products for
-          purchase
+          Select product and click in &apos;Add to cart&apos; to set the
+          products for purchase
         </p>
       </div>
       <hr />
