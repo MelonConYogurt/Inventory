@@ -1,10 +1,10 @@
 "use client";
+
 import * as React from "react";
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {toast, Toaster} from "sonner";
-import SaleProdcuts from "@/utils/SaleProducts";
 import {ScrollArea} from "@/components/ui/scroll-area";
 
 import {
@@ -68,32 +68,30 @@ export function DataTable<TData, TValue>({
     e: React.ChangeEvent<HTMLInputElement>,
     rowIndex: number
   ) {
-    const value = parseInt(e.target.value);
-    console.log("Input value:", value, "Row index:", rowIndex);
+    const value = e.target.value;
+    const rowKey = rowIndex;
 
-    const currentProduct = productsSelect[rowIndex];
-    console.log("Current product:", currentProduct);
+    const row = data[rowKey];
+    const quantityAvailable = row.quantity;
 
-    if (currentProduct) {
-      const quantityAvailable = currentProduct.quantity;
-      console.log("Quantity available:", quantityAvailable);
+    if (value <= quantityAvailable) {
+      const updateList = [...productsSelect];
 
-      if (value <= quantityAvailable) {
-        const updatedList = productsSelect.map((product, index) =>
-          index === rowIndex ? {...product, quantity: value} : product
-        );
-        setProductsSelect(updatedList);
-      } else {
-        toast.error(
-          `La cantidad ingresada excede el stock disponible (${quantityAvailable})`,
-          {
-            position: "bottom-left",
-            duration: 5000,
-          }
-        );
+      if (updateList[rowKey]) {
+        updateList[rowKey] = {
+          ...updateList[rowKey],
+          quantity: value,
+        };
       }
+      setProductsSelect(updateList);
     } else {
-      console.error("Product not found at index:", rowIndex);
+      toast.error(
+        `La cantidad ingresada excede el stock disponible (${quantityAvailable})`,
+        {
+          position: "bottom-left",
+          duration: 5000,
+        }
+      );
     }
   }
 
@@ -118,10 +116,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const totalAmount = productsSelect.reduce(
-    (acc, product) => acc + product.price * product.quantity,
-    0
-  );
   return (
     <div>
       <div className="flex flex-col gap-2 items-start mb-4 mt-4">
@@ -129,8 +123,8 @@ export function DataTable<TData, TValue>({
           Inventory products
         </h1>
         <p className="text-muted-foreground">
-          Select product and click in &apos;Add to cart&apos; to set the
-          products for purchase
+          Select product and click in "Add to cart" to set the products for
+          purchase
         </p>
       </div>
       <hr />
@@ -154,14 +148,14 @@ export function DataTable<TData, TValue>({
               className="rounded-xl dark: bg-transparent"
               onClick={() => {
                 const rows = table.getSelectedRowModel().flatRows;
-                const formatRows = rows.map((row) => {
+                const formatRows = rows.map((row, index) => {
                   return {
                     ...row.original,
-                    quantity: 0,
-                    id: parseInt(row.original.id),
+                    units: 0,
+                    index: index,
                   };
                 });
-
+                console.log(formatRows);
                 setProductsSelect((prevListSelected) => [
                   ...prevListSelected,
                   ...formatRows,
@@ -294,17 +288,9 @@ export function DataTable<TData, TValue>({
         <Button
           variant={"outline"}
           className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
-          onClick={() => {
-            SaleProdcuts(productsSelect);
-          }}
+          onClick={() => console.log(productsSelect)}
         >
           Complete purchase
-        </Button>
-        <Button
-          variant={"outline"}
-          className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
-        >
-          Cancel
         </Button>
       </div>
       <hr />
@@ -315,7 +301,8 @@ export function DataTable<TData, TValue>({
               <TableHead className="w-[200px]">Name</TableHead>
               <TableHead className="w-[100px]">Price</TableHead>
               <TableHead className="w-[100px]">Code</TableHead>
-              <TableHead className="w-[100px]">Quantity</TableHead>
+              <TableHead className="w-[100px]">Stock</TableHead>
+              <TableHead className="w-[100px]">Units</TableHead>
               <TableHead className="w-[150px]">Category</TableHead>
               <TableHead className="w-[200px]">Description</TableHead>
               <TableHead className="w-[150px]">Amount</TableHead>
@@ -334,7 +321,7 @@ export function DataTable<TData, TValue>({
                 const formattedAmount = new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
-                }).format(row.price * row.quantity);
+                }).format(row.price * 0);
 
                 return (
                   <TableRow key={index}>
@@ -343,6 +330,7 @@ export function DataTable<TData, TValue>({
                       {formattedPrice}
                     </TableCell>
                     <TableCell className="w-[100px]">{row.code}</TableCell>
+                    <TableCell className="w-[100px]">{row.quantity}</TableCell>
                     <TableCell className="w-[100px]">
                       <Input
                         type="number"
@@ -372,7 +360,7 @@ export function DataTable<TData, TValue>({
                 {new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
-                }).format(totalAmount)}
+                }).format(0)}
               </TableCell>
             </TableRow>
           </TableFooter>
