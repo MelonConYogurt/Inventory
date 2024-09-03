@@ -13,7 +13,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {LockIcon, UserIcon} from "lucide-react";
 import GetToken from "@/utils/auth";
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 import {toast, Toaster} from "sonner";
 
 interface LoginProps {
@@ -31,7 +31,8 @@ export default function Login({onLoginSuccess}: LoginProps) {
     setData({...data, [name]: value});
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     const {username, password} = data;
     const isAuthenticated = await GetToken(username, password);
 
@@ -69,51 +70,62 @@ export default function Login({onLoginSuccess}: LoginProps) {
               Accede a tu cuenta para gestionar el inventario
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="Username" className="sr-only">
-                Username
-              </Label>
-              <div className="relative">
-                <UserIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-                <Input
-                  id="Username"
-                  placeholder="Username"
-                  type="text"
-                  className="pl-10 dark:bg-transparent !rounded-[8px]"
-                  required
-                  name="username"
-                  onChange={handleChange}
-                />
+          <form action="" onSubmit={handleSubmit}>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="Username" className="sr-only">
+                  Username
+                </Label>
+                <div className="relative">
+                  <UserIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  <Input
+                    autoFocus
+                    id="Username"
+                    placeholder="Username"
+                    type="text"
+                    className="pl-10 dark:bg-transparent !rounded-[8px]"
+                    required
+                    name="username"
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password" className="sr-only">
-                Password
-              </Label>
-              <div className="relative">
-                <LockIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-                <Input
-                  id="password"
-                  placeholder="password"
-                  type="password"
-                  className="pl-10 dark:bg-transparent !rounded-[8px]"
-                  required
-                  name="password"
-                  onChange={handleChange}
-                />
+              <div className="space-y-2">
+                <Label htmlFor="password" className="sr-only">
+                  Password
+                </Label>
+                <div className="relative">
+                  <LockIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  <Input
+                    id="password"
+                    placeholder="password"
+                    type="password"
+                    className="pl-10 dark:bg-transparent !rounded-[8px]"
+                    required
+                    name="password"
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button
-              variant={"outline"}
-              className="w-full bg-transparent rounded-xl z-10"
-              onClick={handleSubmit}
-            >
-              Iniciar Sesión
-            </Button>
-          </CardFooter>
+            </CardContent>
+            <CardFooter>
+              <Button
+                type="submit"
+                variant={"outline"}
+                className="w-full bg-transparent rounded-xl z-10"
+                // onClick={handleSubmit}
+                // autoFocus
+                // onKeyDown={(e) => {
+                //   console.log("enter ejecutado");
+                //   if (e.key === "Enter") {
+                //     handleSubmit();
+                //   }
+                // }}
+              >
+                Iniciar Sesión
+              </Button>
+            </CardFooter>
+          </form>
         </Card>
         <div>
           <Toaster richColors />
