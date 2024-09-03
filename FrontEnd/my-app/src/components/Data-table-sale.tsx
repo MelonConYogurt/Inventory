@@ -74,12 +74,10 @@ export function DataTable<TData, TValue>({
     const rowKey = rowIndex;
 
     const row = productsSelect[rowKey];
-
     const quantityAvailable = row.quantity;
 
     if (value <= quantityAvailable) {
       const updateList = [...productsSelect];
-
       if (updateList[rowKey]) {
         updateList[rowKey] = {
           ...updateList[rowKey],
@@ -88,8 +86,15 @@ export function DataTable<TData, TValue>({
       }
       setProductsSelect(updateList);
     } else {
+      const updateList = [...productsSelect];
+      if (updateList[rowKey]) {
+        updateList[rowKey] = {
+          ...updateList[rowKey],
+          units: quantityAvailable,
+        };
+      }
       toast.error(
-        `La cantidad ingresada excede el stock disponible (${quantityAvailable})`,
+        `The entered quantity exceeds the available stock (${quantityAvailable}), it has been set to the maximum stock`,
         {
           position: "bottom-left",
           duration: 5000,
@@ -298,7 +303,8 @@ export function DataTable<TData, TValue>({
         </div>
         <Button
           variant={"outline"}
-          className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
+          disabled={false}
+          className=" rounded-xl bg-transparent"
           onClick={() => {
             console.log(productsSelect);
           }}
