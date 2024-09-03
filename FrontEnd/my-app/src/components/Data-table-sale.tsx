@@ -68,33 +68,32 @@ export function DataTable<TData, TValue>({
     e: React.ChangeEvent<HTMLInputElement>,
     rowIndex: number
   ) {
-    const value = e.target.value;
-    const rowKey = rowIndex;
-    console.log(e.target.value, rowKey);
+    const value = parseInt(e.target.value);
+    console.log("Input value:", value, "Row index:", rowIndex);
 
-    const row = data[rowKey];
-    console.log(row);
-    const quantityAvailable = row.quantity;
-    console.log(quantityAvailable);
+    const currentProduct = productsSelect[rowIndex];
+    console.log("Current product:", currentProduct);
 
-    if (value <= quantityAvailable) {
-      const updateList = [...productsSelect];
+    if (currentProduct) {
+      const quantityAvailable = currentProduct.quantity;
+      console.log("Quantity available:", quantityAvailable);
 
-      if (updateList[rowKey]) {
-        updateList[rowKey] = {
-          ...updateList[rowKey],
-          quantity: parseInt(value),
-        };
+      if (value <= quantityAvailable) {
+        const updatedList = productsSelect.map((product, index) =>
+          index === rowIndex ? {...product, quantity: value} : product
+        );
+        setProductsSelect(updatedList);
+      } else {
+        toast.error(
+          `La cantidad ingresada excede el stock disponible (${quantityAvailable})`,
+          {
+            position: "bottom-left",
+            duration: 5000,
+          }
+        );
       }
-      setProductsSelect(updateList);
     } else {
-      toast.error(
-        `La cantidad ingresada excede el stock disponible (${quantityAvailable})`,
-        {
-          position: "bottom-left",
-          duration: 5000,
-        }
-      );
+      console.error("Product not found at index:", rowIndex);
     }
   }
 
