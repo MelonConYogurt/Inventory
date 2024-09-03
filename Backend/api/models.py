@@ -17,12 +17,25 @@ class model_product_not_id(BaseModel):
     quantity: int
     category: str | None = None
     description: str | None = None
-
+    
+class model_product_sale(BaseModel):
+    id: int
+    name: str
+    price: float
+    code: int
+    quantity: int
+    units: int
+    category: str | None = None
+    description: str | None = None    
+    
 class InvoiceResponse(BaseModel):
     products : List[model_product]
     
 class InvoiceResponse_not_id(BaseModel):
     products : List[model_product_not_id]
+    
+class InvoiceResponse_sales(BaseModel):
+    products : List[model_product_sale]
 
 class ProductQuantity(BaseModel):
     product_name: str

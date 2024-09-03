@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {toast, Toaster} from "sonner";
 import {ScrollArea} from "@/components/ui/scroll-area";
+import SaleProducts from "@/utils/SaleProducts";
 
 import {
   DropdownMenu,
@@ -36,6 +37,7 @@ import {
   TableRow,
   TableFooter,
 } from "@/components/ui/table";
+import {list} from "postcss";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -101,6 +103,10 @@ export function DataTable<TData, TValue>({
         }
       );
     }
+  }
+
+  function handleSubmit(products) {
+    SaleProducts(products);
   }
 
   useEffect(() => {
@@ -306,7 +312,7 @@ export function DataTable<TData, TValue>({
           disabled={false}
           className=" rounded-xl bg-transparent"
           onClick={() => {
-            console.log(productsSelect);
+            handleSubmit(productsSelect);
           }}
         >
           Complete purchase

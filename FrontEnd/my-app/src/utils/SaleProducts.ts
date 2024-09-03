@@ -8,7 +8,7 @@ interface Product {
   description: string;
 }
 
-async function SaleProdcuts(data: Product[]) {
+async function SaleProducts(data: Product[]) {
   try {
     console.log("Estamos en la funcion");
     console.log(data);
@@ -24,4 +24,4 @@ async function SaleProdcuts(data: Product[]) {
   } catch (error) {}
 }
 
-export default SaleProdcuts;
+export default SaleProducts;
