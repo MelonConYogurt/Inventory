@@ -185,10 +185,11 @@ async def get_suppliers_data():
     
     
 @router_methods.post("/sale/products/", tags=["Inventory"], dependencies=[Depends(get_current_admin_active_user)], response_model=InvoiceResponse)
-async def sale_products(products: InvoiceResponse):
+async def sale_products(products: List[model_product]):
     try:
         db = data_base()
         db.sale_product_manual(products)
+        return InvoiceResponse(products=products)
     except IntegrityError as e:
         raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
     except OperationalError as e:

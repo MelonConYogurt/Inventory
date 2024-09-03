@@ -10,11 +10,8 @@ interface Product {
 
 async function SaleProdcuts(data: Product[]) {
   try {
-    const formatData = {
-      products: data,
-    };
     console.log("Estamos en la funcion");
-    console.log(formatData);
+    console.log(data);
     const token = sessionStorage.getItem("token");
     const response = await fetch("http://127.0.0.1:8000/sale/products/", {
       method: "POST",
