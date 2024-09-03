@@ -18,8 +18,8 @@ async def list_products(limit: int | None = 1000):
         raw_products = db.view_all_products(limit)
         products = []
         for product in raw_products:
-            modeling_product = model_product(
-                id= product[0],
+            modeling_product = Product(
+                id=product[0],
                 name=product[1],
                 price=product[2],
                 code=product[3],
@@ -29,7 +29,7 @@ async def list_products(limit: int | None = 1000):
             )
             products.append(modeling_product)
         return InvoiceResponse(products=products)
-    except OperationalError as e:
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while listing products: {str(e)}")
@@ -46,14 +46,14 @@ async def statistics():
             "top_10_least_quantity": [ProductQuantity(product_name=name, total_quantity=int(quantity)) for name, quantity in data['top_10_least_quantity']]
         }
         return formatted_data
-    except OperationalError as e:
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while fetching statistics: {str(e)}")
 
 
-@router_methods.post("/add/product", response_model=model_product, tags=["Inventory"])
-async def add_new_product(product: model_product):
+@router_methods.post("/add/product", response_model=Product, tags=["Inventory"])
+async def add_new_product(product: Product):
     try:
         db = data_base()
         db.insert_product(
@@ -65,31 +65,36 @@ async def add_new_product(product: model_product):
             description=product.description
         )
         return product
-    except IntegrityError as e:
+    except IntegrityError:
         raise HTTPException(status_code=400, detail="Integrity error: A product with the same code already exists.")
-    except OperationalError as e:
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while adding the product: {str(e)}")
 
 
-@router_methods.post("/add/multiple/products", response_model=InvoiceResponse_not_id, tags=["Inventory"])
-async def add_new_products(products: List[model_product_not_id]):
+@router_methods.post("/add/multiple/products", response_model=InvoiceResponseNotID, tags=["Inventory"])
+async def add_new_products(products: List[ProductWithoutID]):
     try:
         db = data_base()
         db.insert_list_products(products)
-        return InvoiceResponse_not_id(products=products)
-    except IntegrityError as e:
+        return InvoiceResponseNotID(products=products)
+    except IntegrityError:
         raise HTTPException(status_code=400, detail="Integrity error: One or more products have duplicate codes.")
-    except OperationalError as e:
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while adding multiple products: {str(e)}")
 
 
 @router_methods.post("/add/user/", tags=["User controls (Only Admins)"], dependencies=[Depends(get_current_admin_active_user)])
-async def add_new_user(username: Annotated[str, Form()], full_name: Annotated[str, Form()],
-                       email: Annotated[str, Form()], password: Annotated[str, Form()], admin: Annotated[bool, Form()]):
+async def add_new_user(
+    username: Annotated[str, Form()],
+    full_name: Annotated[str, Form()],
+    email: Annotated[str, Form()],
+    password: Annotated[str, Form()],
+    admin: Annotated[bool, Form()]
+):
     try:
         db = data_base()
         db.new_user(
@@ -97,48 +102,49 @@ async def add_new_user(username: Annotated[str, Form()], full_name: Annotated[st
             full_name=full_name,
             email=email,
             password=password,
-            admin= admin
+            admin=admin
         )
         print(f"User created: {username}")
-    except IntegrityError as e:
+    except IntegrityError:
         raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
-    except OperationalError as e:
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
 
-@router_methods.post("/delete/user/", tags=["User controls (Only Admins)"], dependencies=[Depends(get_current_admin_active_user)],)
+
+@router_methods.post("/delete/user/", tags=["User controls (Only Admins)"], dependencies=[Depends(get_current_admin_active_user)])
 async def delete_user(username: Annotated[str, Form()]):
     try:
         db = data_base()
         validation = db.delete_user(username)
         if validation:
-            print("Succesfully")
-    except IntegrityError as e:
+            print("Successfully deleted user")
+    except IntegrityError:
         raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
-    except OperationalError as e:
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
-    
-    
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while deleting the user: {str(e)}")
+
+
 @router_methods.post("/update/user/password", tags=["User controls (Only Admins)"], dependencies=[Depends(get_current_admin_active_user)])
 async def update_user_password(username: Annotated[str, Form()], password: Annotated[str, Form()]):
     try:
         db = data_base()
         validation = db.update_user_password(password, username)
         if validation:
-            print("Succesfully")
-    except IntegrityError as e:
+            print("Password updated successfully")
+    except IntegrityError:
         raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
-    except OperationalError as e:
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
-    
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while updating the user password: {str(e)}")
 
-@router_methods.post("/add/supplier/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=model_suppplier)
-async def add_supplier(supplier: model_suppplier):
+
+@router_methods.post("/add/supplier/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=SupplierModel)
+async def add_supplier(supplier: SupplierModel):
     try:
         db = data_base()
         db.add_supplier(
@@ -150,49 +156,48 @@ async def add_supplier(supplier: model_suppplier):
             supplier.contact
         )
         return supplier
-    except IntegrityError as e:
-        raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
-    except OperationalError as e:
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="Integrity error: A supplier with this NIT already exists.")
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
-    
-    
-@router_methods.get("/get/suppliers/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=list_suppliers)
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while adding the supplier: {str(e)}")
+
+
+@router_methods.get("/get/suppliers/", tags=["Suppliers"], dependencies=[Depends(get_current_admin_active_user)], response_model=SupplierList)
 async def get_suppliers_data():
     try:
-        list = []
+        suppliers = []
         db = data_base()
         data = db.get_suppliers()
-        print(data)
         for row in data:
-            supplier = model_suppplier(
-                name = row[1],
-                phone = row[2],
-                direction = row[3],
-                nit = row[4],
-                email = row[5],
-                contact = row[6]
+            supplier = SupplierModel(
+                name=row[1],
+                phone=row[2],
+                direction=row[3],
+                nit=row[4],
+                email=row[5],
+                contact=row[6]
             )
-            list.append(supplier)
-        return list_suppliers(suppliers=list)
-    except IntegrityError as e:
-        raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
-    except OperationalError as e:
+            suppliers.append(supplier)
+        return SupplierList(suppliers=suppliers)
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="Integrity error: A supplier with this NIT already exists.")
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
-    
-    
-@router_methods.post("/sale/products/", tags=["Inventory"], dependencies=[Depends(get_current_admin_active_user)], response_model=InvoiceResponse_sales)
-async def sale_products(products: List[model_product_sale]):
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while fetching suppliers: {str(e)}")
+
+
+@router_methods.post("/sale/products/", tags=["Inventory"], dependencies=[Depends(get_current_admin_active_user)], response_model=InvoiceResponseSales)
+async def sale_products(products: List[ProductSale]):
     try:
         db = data_base()
         db.sale_product_manual(products)
-        return InvoiceResponse_sales(products=products)
-    except IntegrityError as e:
-        raise HTTPException(status_code=400, detail="Integrity error: A user with this username or email already exists.")
-    except OperationalError as e:
+        return InvoiceResponseSales(products=products)
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="Integrity error: Some products have duplicate codes.")
+    except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while creating the user: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while processing the sale: {str(e)}")

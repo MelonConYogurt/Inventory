@@ -1,41 +1,32 @@
 from typing import List
 from pydantic import BaseModel
 
-class model_product(BaseModel):
-    id: int
+class BaseProduct(BaseModel):
     name: str
     price: float
     code: int
     quantity: int
     category: str | None = None
     description: str | None = None
-    
-class model_product_not_id(BaseModel):
-    name: str
-    price: float
-    code: int
-    quantity: int
-    category: str | None = None
-    description: str | None = None
-    
-class model_product_sale(BaseModel):
+
+class Product(BaseProduct):
     id: int
-    name: str
-    price: float
-    code: int
-    quantity: int
+
+class ProductWithoutID(BaseProduct):
+    pass
+
+class ProductSale(BaseProduct):
+    id: int
     units: int
-    category: str | None = None
-    description: str | None = None    
-    
+
 class InvoiceResponse(BaseModel):
-    products : List[model_product]
-    
-class InvoiceResponse_not_id(BaseModel):
-    products : List[model_product_not_id]
-    
-class InvoiceResponse_sales(BaseModel):
-    products : List[model_product_sale]
+    products: List[Product]
+
+class InvoiceResponseNotID(BaseModel):
+    products: List[ProductWithoutID]
+
+class InvoiceResponseSales(BaseModel):
+    products: List[ProductSale]
 
 class ProductQuantity(BaseModel):
     product_name: str
@@ -67,13 +58,13 @@ class User(BaseModel):
 class UserInDB(User):
     hashed_password: str
 
-class model_suppplier(BaseModel):
+class SupplierModel(BaseModel):
     name: str
     phone: int
     direction: str 
     nit: int
     email: str
     contact: str
-    
-class list_suppliers(BaseModel):
-    suppliers: List[model_suppplier]
+
+class SupplierList(BaseModel):
+    suppliers: List[SupplierModel]
