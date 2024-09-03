@@ -193,37 +193,36 @@ class data_base:
             
     def sale_product_manual(self, products: list):
         self.connect.autocommit = False
+        sale_total = 0
         validate_products = []
         fail_to_validate = []
         try:
             sale_id = self.sale()
-            for product in products:
-                valor, product_data = self.search_products(product.code)
-                print(product.units)
-                if valor and (product.units > 0):
-                    validate_products.append(product)
-                else:
-                    fail_to_validate.append(product)
+            if sale_id:
+                for product in products:
+                    valor, product_data = self.search_products(product.code)
+                    if valor and (product.units > 0):
+                        validate_products.append(product)
+                    else:
+                        fail_to_validate.append(product)
+                
+                for product in validate_products:
+                    sale_total += product.price * product.units
+                    query = "INSERT INTO public.sale_products (sale_id, product_id, quantity, product_price_at_sale) VALUES (%s, %s, %s, %s) RETURNING *"
+                    values = (sale_id, product.id, product.quantity, product.price)
+                    self.cursor.execute(query, values)
+                    sale_item_data = self.cursor.fetchone()
+                    print(f"Sale product: {sale_item_data}")
+                    self.delete_products(code=product.code, quantity=product.units)
             
-                    
-                    
-            
-            
-            print("productos validados:", validate_products)
-            
-            # sale_id = self.sale()  
-            # if not sale_id:
-            #     raise ValueError("Failed to create sale")
-            
-            # for product in products:
-            #     query = "INSERT INTO public.sale_products (sale_id, product_id, quantity, product_price_at_sale) VALUES (%s, %s, %s, %s) RETURNING *"
-            #     values = (sale_id, product.id, product.quantity, product.price)
-            #     self.cursor.execute(query, values)
-            #     sale_item_data = self.cursor.fetchone()
-            #     print(f"Sale product: {sale_item_data}")
-            #     self.delete_products(code=product.code, quantity=product.quantity)
-            # self.connect.commit()            
+                query_update_total = ("UPDATE public.sales SET sale_total = %s WHERE sale_id = %s")
+                values_sale_update = (sale_total, sale_id)
+                self.cursor.execute(query_update_total, values_sale_update)            
+            self.connect.commit()            
         except psycopg2.Error as err:
+            query = ("DELETE FROM public.sales WHERE sale_id = %s")
+            values = (sale_id,)
+            self.cursor.execute(query, values)
             self.logger.error(f"Error creating new user: {err}", exc_info=True)
             self.connect.rollback()
             raise
