@@ -209,10 +209,9 @@ class data_base:
                 for product in validate_products:
                     sale_total += product.price * product.units
                     query = "INSERT INTO public.sale_products (sale_id, product_id, quantity, product_price_at_sale) VALUES (%s, %s, %s, %s) RETURNING *"
-                    values = (sale_id, product.id, product.quantity, product.price)
+                    values = (sale_id, product.id, product.units, product.price)
                     self.cursor.execute(query, values)
-                    sale_item_data = self.cursor.fetchone()
-                    print(f"Sale product: {sale_item_data}")
+                    print(f"Sale product: {product.name}, units: {product.units}")
                     self.delete_products(code=product.code, quantity=product.units)
             
                 query_update_total = ("UPDATE public.sales SET sale_total = %s WHERE sale_id = %s")
