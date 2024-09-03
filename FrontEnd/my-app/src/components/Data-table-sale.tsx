@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {toast, Toaster} from "sonner";
@@ -70,12 +70,10 @@ export function DataTable<TData, TValue>({
     e: React.ChangeEvent<HTMLInputElement>,
     rowIndex: number
   ) {
-    const value = e.target.value;
+    const value = parseInt(e.target.value, 10);
     const rowKey = rowIndex;
-    console.log("Value: ", value, "RowKey: ", rowIndex);
 
     const row = productsSelect[rowKey];
-    console.log("Fila seleccionda:", row);
 
     const quantityAvailable = row.quantity;
 
@@ -99,6 +97,13 @@ export function DataTable<TData, TValue>({
       );
     }
   }
+
+  useEffect(() => {
+    const newTotal = productsSelect.reduce((subTotal, product) => {
+      return subTotal + product.price * (product.units || 0);
+    }, 0);
+    setTotal(newTotal);
+  }, [productsSelect]);
 
   const table = useReactTable({
     data,
@@ -153,10 +158,12 @@ export function DataTable<TData, TValue>({
               className="rounded-xl dark: bg-transparent"
               onClick={() => {
                 const rows = table.getSelectedRowModel().flatRows;
-                const formatRows = rows.map((row, index) => {
+                const formatRows = rows.map((row) => {
+                  const original = row.original as tableData;
                   return {
-                    ...row.original,
+                    ...original,
                     units: 0,
+                    id: parseInt(original.id),
                   };
                 });
                 console.log("Fila formateada: ", formatRows);
@@ -292,7 +299,9 @@ export function DataTable<TData, TValue>({
         <Button
           variant={"outline"}
           className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
-          onClick={() => console.log(productsSelect)}
+          onClick={() => {
+            console.log(productsSelect);
+          }}
         >
           Complete purchase
         </Button>
@@ -331,7 +340,7 @@ export function DataTable<TData, TValue>({
                 const formattedAmount = new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
-                }).format(row.price * row.units);
+                }).format(row.price * (row.units ?? 0));
 
                 return (
                   <TableRow key={index}>
