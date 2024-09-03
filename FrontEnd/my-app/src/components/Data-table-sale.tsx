@@ -49,6 +49,7 @@ interface tableData {
   quantity: number;
   category: string;
   description: string;
+  units?: number;
 }
 
 export function DataTable<TData, TValue>({
@@ -63,6 +64,7 @@ export function DataTable<TData, TValue>({
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [productsSelect, setProductsSelect] = useState<tableData[]>([]);
+  const [total, setTotal] = useState<number>(0);
 
   function handleQuantity(
     e: React.ChangeEvent<HTMLInputElement>,
@@ -118,13 +120,6 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
-
-  function handleTotal() {
-    const total = 0;
-    productsSelect.forEach((row) => {
-      total += row.price * row.units;
-    });
-  }
 
   return (
     <div>
@@ -375,7 +370,7 @@ export function DataTable<TData, TValue>({
                 {new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
-                }).format()}
+                }).format(total)}
               </TableCell>
             </TableRow>
           </TableFooter>
