@@ -70,8 +70,11 @@ export function DataTable<TData, TValue>({
   ) {
     const value = e.target.value;
     const rowKey = rowIndex;
+    console.log("Value: ", value, "RowKey: ", rowIndex);
 
-    const row = data[rowKey];
+    const row = productsSelect[rowKey];
+    console.log("Fila seleccionda:", row);
+
     const quantityAvailable = row.quantity;
 
     if (value <= quantityAvailable) {
@@ -80,7 +83,7 @@ export function DataTable<TData, TValue>({
       if (updateList[rowKey]) {
         updateList[rowKey] = {
           ...updateList[rowKey],
-          quantity: value,
+          units: value,
         };
       }
       setProductsSelect(updateList);
@@ -115,6 +118,13 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+
+  function handleTotal() {
+    const total = 0;
+    productsSelect.forEach((row) => {
+      total += row.price * row.units;
+    });
+  }
 
   return (
     <div>
@@ -152,10 +162,9 @@ export function DataTable<TData, TValue>({
                   return {
                     ...row.original,
                     units: 0,
-                    index: index,
                   };
                 });
-                console.log(formatRows);
+                console.log("Fila formateada: ", formatRows);
                 setProductsSelect((prevListSelected) => [
                   ...prevListSelected,
                   ...formatRows,
@@ -292,6 +301,12 @@ export function DataTable<TData, TValue>({
         >
           Complete purchase
         </Button>
+        <Button
+          variant={"outline"}
+          className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
+        >
+          Cancel
+        </Button>
       </div>
       <hr />
       <div className="mt-5 border rounded-md">
@@ -321,7 +336,7 @@ export function DataTable<TData, TValue>({
                 const formattedAmount = new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
-                }).format(row.price * 0);
+                }).format(row.price * row.units);
 
                 return (
                   <TableRow key={index}>
@@ -360,7 +375,7 @@ export function DataTable<TData, TValue>({
                 {new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
-                }).format(0)}
+                }).format()}
               </TableCell>
             </TableRow>
           </TableFooter>
