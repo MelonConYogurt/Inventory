@@ -7,9 +7,9 @@ import {useEffect, useState} from "react";
 
 interface sales {
   sale_id: string;
-  sale_code: string;
+  sale_code: number;
   sale_date: string;
-  sale_total: string;
+  sale_total: number;
 }
 
 function ViewSales() {

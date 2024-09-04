@@ -212,7 +212,7 @@ async def get_sales_data():
         data = db.get_sales()
         for sale in data:
             row = SalesModel(
-                sale_id = sale[0],
+                sale_id = str(sale[0]),
                 sale_code = sale[1],
                 sale_date = sale[2],
                 sale_total = sale[3]

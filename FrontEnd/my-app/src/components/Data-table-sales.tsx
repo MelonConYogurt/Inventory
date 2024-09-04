@@ -70,10 +70,12 @@ export function DataTable<TData, TValue>({
       <div className="flex flex-row justify-between items-center ">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by name..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter by id..."
+            value={
+              (table.getColumn("sale_id")?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
+              table.getColumn("sale_id")?.setFilterValue(event.target.value)
             }
             className="max-w-sm rounded-xl dark: bg-transparent"
           />

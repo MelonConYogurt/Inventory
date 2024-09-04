@@ -6,9 +6,9 @@ import {Button} from "./ui/button";
 
 export type sales = {
   sale_id: string;
-  sale_code: string;
+  sale_code: number;
   sale_date: string;
-  sale_total: string;
+  sale_total: number;
 };
 
 export const columns: ColumnDef<sales>[] = [
