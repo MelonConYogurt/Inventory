@@ -68,3 +68,9 @@ class SupplierModel(BaseModel):
 
 class SupplierList(BaseModel):
     suppliers: List[SupplierModel]
+    
+class SalesModel(BaseModel):
+    sale_id: int
+    sale_code: int
+    sale_date: str
+    sale_total: int

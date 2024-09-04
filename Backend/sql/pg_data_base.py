@@ -480,7 +480,19 @@ class data_base:
             self.connect.rollback()
             raise
             
-            
+    def get_sales(self):
+        try:
+            query = ("SELECT * FROM public.sales")
+            self.cursor.execute(query)
+            data = self.cursor.fetchall()
+            if data:
+                return data
+        except psycopg2.Error as err:
+            self.logger.error(f"Error disabling user: {err}", exc_info=True)
+            self.connect.rollback()
+            raise
+    
+    
 if __name__ == "__main__":  
     pass
     # try:

@@ -201,3 +201,18 @@ async def sale_products(products: List[ProductSale]):
         raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred while processing the sale: {str(e)}")
+
+
+
+@router_methods.get("/get/sales/", tags=["Inventory"], dependencies=[Depends(get_current_admin_active_user)], response_model=list[SalesModel])
+async def get_sales_data():
+    try:
+        db = data_base()
+        sales_data = db.get_sales()
+        return sales_data
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="Integrity error: Some products have duplicate codes.")
+    except OperationalError:
+        raise HTTPException(status_code=500, detail="Database connection error. Please try again later.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred while processing the sale: {str(e)}")
