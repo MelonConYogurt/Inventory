@@ -485,7 +485,7 @@ if __name__ == "__main__":
     pass
     # try:
     #     db = data_base()
-    #     db.add_supplier("test", 123132123, "test", 12312312, "asdfasdf", "asdfasdf")
+    #     db.new_user("admin","admin","admin","alecontra13", True)
     # except Exception as e:
     #     print(e)
    
