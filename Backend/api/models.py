@@ -76,3 +76,10 @@ class SalesModel(BaseModel):
     sale_code: int
     sale_date: date
     sale_total: int
+
+class ProductsSaleModel(BaseModel):
+    sale_products_id: int
+    sale_id: str
+    product_id: int
+    quantity: int
+    product_price_at_sale: float

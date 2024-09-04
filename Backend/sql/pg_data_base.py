@@ -486,6 +486,18 @@ class data_base:
             self.cursor.execute(query)
             data = self.cursor.fetchall()
             if data:
+                return data
+        except psycopg2.Error as err:
+            self.logger.error(f"Error disabling user: {err}", exc_info=True)
+            self.connect.rollback()
+            raise
+        
+    def get_products_sale(self):
+        try:
+            query = ("SELECT * FROM public.sale_products")
+            self.cursor.execute(query)
+            data = self.cursor.fetchall()
+            if data:
                 print(data)
                 return data
         except psycopg2.Error as err:
