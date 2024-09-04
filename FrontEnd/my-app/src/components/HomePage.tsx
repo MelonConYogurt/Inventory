@@ -18,6 +18,7 @@ import Sales from "./Sales";
 import Addsale from "../components/AddSale";
 import FormSupplier from "./AddSupplier";
 import {motion, AnimatePresence} from "framer-motion";
+import ViewSales from "./ViewSales";
 
 function HomePage() {
   const [activeComponent, setActiveComponent] = useState<string | null>(null);
@@ -152,7 +153,7 @@ function HomePage() {
             )}
             {activeComponent === "Dashboard" && <CardDisplay />}
             {activeComponent === "Inventory" && <Inventory />}
-            {activeComponent == "View sales"}
+            {activeComponent == "View sales" && <ViewSales />}
             {activeComponent == "Add sale" && <Addsale />}
             {activeComponent === "Add product" && <Sales />}
             {activeComponent === "Suppliers" && <FormSupplier />}
