@@ -4,7 +4,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import {ArrowUpDown} from "lucide-react";
 import {Button} from "./ui/button";
 
-export type sales = {
+export type salesProducts = {
   sale_products_id: number;
   sale_id: string;
   product_id: number;
@@ -12,7 +12,7 @@ export type sales = {
   product_price_at_sale: number;
 };
 
-export const columns: ColumnDef<sales>[] = [
+export const columns: ColumnDef<salesProducts>[] = [
   {
     accessorKey: "sale_id",
     header: ({column}) => {
