@@ -5,47 +5,59 @@ import {ArrowUpDown} from "lucide-react";
 import {Button} from "./ui/button";
 
 export type sales = {
-  name: string;
-  phone: string;
-  direction: string;
-  nit: string;
-  email: string;
-  contact: string;
+  sale_id: string;
+  sale_code: string;
+  sale_date: string;
+  sale_total: string;
 };
 
 export const columns: ColumnDef<sales>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "sale_id",
     header: ({column}) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Id
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "phone",
-    header: "Phone",
+    accessorKey: "sale_code",
+    header: "Code",
   },
   {
-    accessorKey: "direction",
-    header: "Direction",
+    accessorKey: "sale_date",
+    header: "Sale date",
   },
   {
-    accessorKey: "nit",
-    header: "Nit",
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "contact",
-    header: "Contact",
+    accessorKey: "sale_total",
+    header: ({column}) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Sale total
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({row}) => {
+      const price = row.getValue("price");
+      if (typeof price !== "number") {
+        return <div className="font-medium">Invalid price</div>;
+      }
+      const formatted = new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+      }).format(price);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
   },
 ];
