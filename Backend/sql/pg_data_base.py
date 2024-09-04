@@ -486,6 +486,7 @@ class data_base:
             self.cursor.execute(query)
             data = self.cursor.fetchall()
             if data:
+                print(data)
                 return data
         except psycopg2.Error as err:
             self.logger.error(f"Error disabling user: {err}", exc_info=True)

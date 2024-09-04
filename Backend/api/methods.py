@@ -206,10 +206,19 @@ async def sale_products(products: List[ProductSale]):
 
 @router_methods.get("/get/sales/", tags=["Inventory"], dependencies=[Depends(get_current_admin_active_user)], response_model=list[SalesModel])
 async def get_sales_data():
+    sales = []
     try:
         db = data_base()
-        sales_data = db.get_sales()
-        return sales_data
+        data = db.get_sales()
+        for sale in data:
+            row = SalesModel(
+                sale_id = sale[0],
+                sale_code = sale[1],
+                sale_date = sale[2],
+                sale_total = sale[3]
+            )
+            sales.append(row)
+        return sales
     except IntegrityError:
         raise HTTPException(status_code=400, detail="Integrity error: Some products have duplicate codes.")
     except OperationalError:
