@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import date
 
 
 class BaseProduct(BaseModel):
@@ -74,5 +74,5 @@ class SupplierList(BaseModel):
 class SalesModel(BaseModel):
     sale_id: int
     sale_code: int
-    sale_date: datetime
+    sale_date: date
     sale_total: int
