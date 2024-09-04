@@ -48,7 +48,7 @@ export const columns: ColumnDef<sales>[] = [
       );
     },
     cell: ({row}) => {
-      const price = row.getValue("price");
+      const price = row.getValue("sale_total");
       if (typeof price !== "number") {
         return <div className="font-medium">Invalid price</div>;
       }
@@ -57,7 +57,7 @@ export const columns: ColumnDef<sales>[] = [
         currency: "COP",
       }).format(price);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
 ];

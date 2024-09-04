@@ -68,14 +68,14 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({row}) => {
       const price = row.getValue("price");
       if (typeof price !== "number") {
-        return <div className="text-right font-medium">Invalid price</div>;
+        return <div className="font-medium">Invalid price</div>;
       }
       const formatted = new Intl.NumberFormat("es-CO", {
         style: "currency",
         currency: "COP",
       }).format(price);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
