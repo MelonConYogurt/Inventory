@@ -100,6 +100,24 @@ export default function Component() {
     });
   }
 
+  function handleReset(e: React.FormEvent) {
+    e.preventDefault();
+    setCategoryValue("");
+    setFormValues({
+      name: "",
+      price: "",
+      code: "",
+      quantity: "",
+      category: "",
+      description: "",
+    });
+    setProducts([]);
+    toast.info("The data has been successfully reset.", {
+      position: "bottom-left",
+      duration: 5000,
+    });
+  }
+
   async function handleCreatedProducts() {
     const updatedProducts = products.map((product) => ({
       name: product.name,
@@ -305,13 +323,20 @@ export default function Component() {
                   />
                 </div>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="gap-4">
                 <Button
                   type="submit"
                   className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1"
                   variant="outline"
                 >
                   Add product
+                </Button>
+                <Button
+                  className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1"
+                  variant="outline"
+                  onClick={handleReset}
+                >
+                  Cancel
                 </Button>
               </CardFooter>
             </form>
