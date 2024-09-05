@@ -179,7 +179,7 @@ export default function Component() {
     {value: "home decor", label: "Home decor"},
     {value: "Material", label: "Material"},
     {value: "Food", label: "Food"},
-    {value: "Sports equipment", label: "Sports equipment"},
+    {value: " ", label: "Sports equipment"},
   ];
 
   return (
