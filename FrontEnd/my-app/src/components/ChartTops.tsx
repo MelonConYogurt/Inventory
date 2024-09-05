@@ -3,6 +3,7 @@
 import {Bar, BarChart, XAxis, YAxis} from "recharts";
 import {useEffect, useState} from "react";
 import GetStadiscticData from "@/utils/statistic";
+import {TrendingUp, TrendingDown} from "lucide-react";
 
 import {
   Card,
@@ -64,7 +65,9 @@ export function ChartTopLeast() {
     <div className="flex flex-row gap-5">
       <Card className="flex flex-col items-center justify-center rounded-xl dark:bg-transparent mt-5  w-1/2">
         <CardHeader>
-          <CardTitle>Top 10 Products with Lowest Stock</CardTitle>
+          <CardTitle className="flex items-center justify-center gap-2">
+            <TrendingDown /> Top 10 Products with Lowest Stock
+          </CardTitle>
           <CardDescription>
             Hover over the bars to view detailed stock quantities
           </CardDescription>
@@ -101,7 +104,10 @@ export function ChartTopLeast() {
       </Card>
       <Card className="flex flex-col items-center justify-center rounded-xl dark:bg-transparent mt-5 w-1/2">
         <CardHeader>
-          <CardTitle>Top 10 Products with Most Stock</CardTitle>
+          <CardTitle className="flex items-center justify-center gap-2">
+            <TrendingUp />
+            Top 10 Products with Most Stock
+          </CardTitle>
           <CardDescription>
             Hover over the bars to view detailed stock quantities
           </CardDescription>
