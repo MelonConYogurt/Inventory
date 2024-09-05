@@ -6,22 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {ChartsCommons} from "./ChartCategory";
+import {ChartTops} from "./ChartTops";
 
 function CardDisplay() {
   return (
     <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
+      <ChartsCommons></ChartsCommons>
+      <ChartTops></ChartTops>
     </div>
   );
 }

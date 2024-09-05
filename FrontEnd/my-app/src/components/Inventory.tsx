@@ -3,11 +3,11 @@
 import {columns} from "../components/Columns";
 import {DataTable} from "./Data-table";
 import React, {useState, useEffect} from "react";
-import {ChartCategory} from "../components/ChartCategory";
+import {ChartsCommons} from "../components/ChartCategory";
 import GetDataProducts from "@/utils/products";
 import {Package, RefreshCcw} from "lucide-react";
 import {Button} from "./ui/button";
-import {ChartTopLeast} from "./ChartTops";
+import {ChartTops} from "./ChartTops";
 import {
   Card,
   CardContent,
@@ -91,10 +91,10 @@ function Inventory() {
         </Card>
       </div>
       <div className="w-auto h-auto">
-        <ChartCategory />
+        <ChartsCommons />
       </div>
       <div className="w-auto h-auto">
-        <ChartTopLeast></ChartTopLeast>
+        <ChartTops></ChartTops>
       </div>
     </div>
   );

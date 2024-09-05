@@ -37,7 +37,7 @@ interface product {
   total_quantity: number;
 }
 
-export function ChartTopLeast() {
+export function ChartTops() {
   const [chartDataLeast, setChartDataLeast] = useState<product[]>([]);
   const [chartDataMost, setChartDataMost] = useState<product[]>([]);
 
@@ -80,22 +80,30 @@ export function ChartTopLeast() {
             <BarChart
               accessibilityLayer
               data={chartDataLeast}
-              layout="vertical"
-              margin={{left: 20}}
+              margin={{
+                top: 20,
+              }}
             >
-              <XAxis type="number" dataKey="quantity" hide />
-              <YAxis
+              <CartesianGrid vertical={false} />
+              <XAxis
                 dataKey="product"
-                type="category"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
               />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="quantity" fill="var(--color-quantity)" radius={5} />
+              <Bar dataKey="quantity" fill="var(--color-quantity)" radius={8}>
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
             </BarChart>
           </ChartContainer>
         </CardContent>

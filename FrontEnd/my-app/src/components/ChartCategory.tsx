@@ -20,7 +20,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-export function ChartCategory() {
+export function ChartsCommons() {
   const [data, setData] = useState([]);
   const [chartConfig, setChartConfig] = useState({});
   const [value, setValue] = useState(0);
