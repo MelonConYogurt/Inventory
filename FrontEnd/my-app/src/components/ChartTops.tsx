@@ -1,6 +1,6 @@
 "use client";
 
-import {Bar, BarChart, XAxis, YAxis} from "recharts";
+import {Bar, BarChart, XAxis, YAxis, LabelList, CartesianGrid} from "recharts";
 import {useEffect, useState} from "react";
 import GetStadiscticData from "@/utils/statistic";
 import {TrendingUp, TrendingDown} from "lucide-react";
@@ -26,6 +26,9 @@ const chartConfig = {
   quantity: {
     label: "Quantity",
     color: "hsl(var(--chart-1))",
+  },
+  label: {
+    color: "hsl(var(--background))",
   },
 } satisfies ChartConfig;
 
@@ -118,21 +121,46 @@ export function ChartTopLeast() {
               accessibilityLayer
               data={chartDataMost}
               layout="vertical"
-              margin={{left: 20}}
+              margin={{
+                right: 30,
+              }}
             >
-              <XAxis type="number" dataKey="quantity" hide />
+              <CartesianGrid horizontal={false} />
               <YAxis
                 dataKey="product"
                 type="category"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+                hide
               />
+              <XAxis dataKey="quantity" type="number" hide />
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent hideLabel />}
+                content={<ChartTooltipContent indicator="line" />}
               />
-              <Bar dataKey="quantity" fill="var(--color-quantity)" radius={5} />
+              <Bar
+                dataKey="quantity"
+                layout="vertical"
+                fill="var(--color-quantity)"
+                radius={4}
+              >
+                <LabelList
+                  dataKey="product"
+                  position="insideLeft"
+                  offset={8}
+                  className="fill-[--color-label]"
+                  fontSize={12}
+                />
+                <LabelList
+                  dataKey="quantity"
+                  position="right"
+                  offset={8}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
             </BarChart>
           </ChartContainer>
         </CardContent>

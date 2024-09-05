@@ -4,7 +4,7 @@ import * as React from "react";
 import {useState, useEffect} from "react";
 import {Label, Pie, PieChart} from "recharts";
 import GetStadiscticData from "@/utils/statistic";
-import {BarChart3, Package} from "lucide-react";
+import {BarChart3, Car, Package, DollarSign} from "lucide-react";
 
 import {
   Card,
@@ -23,6 +23,7 @@ import {
 export function ChartCategory() {
   const [data, setData] = useState([]);
   const [chartConfig, setChartConfig] = useState({});
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +31,7 @@ export function ChartCategory() {
         const responseData = await GetStadiscticData();
 
         const chartData = await responseData.category_counts;
+        const total_value_inventory = responseData.value_inventory;
 
         const newData = chartData.map((element) => {
           const category = element.product_category
@@ -54,6 +56,7 @@ export function ChartCategory() {
         }, {});
 
         setData(newData);
+        setValue(total_value_inventory);
         setChartConfig(newChartConfig);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -68,7 +71,7 @@ export function ChartCategory() {
 
   return (
     <div className="flex flex-col md:flex-row gap-5">
-      <Card className="rounded-xl dark:bg-transparent w-full md:w-1/2">
+      <Card className="rounded-xl dark:bg-transparent w-1/2">
         <CardHeader className="items-center pb-0">
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="h-6 w-6" />
@@ -133,7 +136,7 @@ export function ChartCategory() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="rounded-xl dark:bg-transparent w-full md:w-1/2">
+      <Card className="rounded-xl dark:bg-transparent w-1/2">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Package className="h-6 w-6" />
@@ -153,6 +156,23 @@ export function ChartCategory() {
         <CardFooter className="text-center text-sm text-muted-foreground">
           This represents the total count of all products across all categories
         </CardFooter>
+      </Card>
+      <Card className="rounded-xl dark:bg-transparent w-1/2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <DollarSign />
+            Value of the inventory
+          </CardTitle>
+          <CardDescription>Total value calculate</CardDescription>
+        </CardHeader>
+        <CardContent className="flex items-center justify-center h-[250px]">
+          <div className="text-4xl font-bold">
+            {new Intl.NumberFormat("es-CO", {
+              style: "currency",
+              currency: "COP",
+            }).format(value)}
+          </div>
+        </CardContent>
       </Card>
     </div>
   );
