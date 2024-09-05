@@ -3,5 +3,4 @@
 .env.development
 .env.production
 .env.test
-database.ini
 .venv
