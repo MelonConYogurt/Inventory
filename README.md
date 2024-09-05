@@ -119,6 +119,9 @@ db_instance.sale_products()
 
 ### 4. Modelos
 
+![Screenshot 2024-09-05 144137](https://github.com/user-attachments/assets/560de64c-0278-4de1-b265-4011302fe339)
+
+
 El módulo de modelos (`models.py`) define la estructura de los datos que se manejarán en las operaciones del API, usando `Pydantic` para garantizar la validación de datos.
 
 **Modelo principal:**
