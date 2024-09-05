@@ -42,7 +42,9 @@ async def statistics():
         data = db.product_statistics()
         formatted_data = {
             "product_total_count": data['total_count'],
+            "value_inventory": data['value_inventory'],
             "category_counts": [CategoryCount(product_category=category, amount=count) for category, count in data['category_counts']],
+            "top_10_most_quantity": [ProductQuantity(product_name=name, total_quantity=int(quantity)) for name, quantity in data['top_10_most_quantity']],
             "top_10_least_quantity": [ProductQuantity(product_name=name, total_quantity=int(quantity)) for name, quantity in data['top_10_least_quantity']]
         }
         return formatted_data

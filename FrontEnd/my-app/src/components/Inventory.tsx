@@ -7,7 +7,7 @@ import {ChartCategory} from "../components/ChartCategory";
 import GetDataProducts from "@/utils/products";
 import {Package, RefreshCcw} from "lucide-react";
 import {Button} from "./ui/button";
-import {ChartTopLeast} from "./ChartTopLess";
+import {ChartTopLeast} from "./ChartTops";
 import {
   Card,
   CardContent,

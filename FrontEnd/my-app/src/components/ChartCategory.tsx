@@ -4,6 +4,7 @@ import * as React from "react";
 import {useState, useEffect} from "react";
 import {Label, Pie, PieChart} from "recharts";
 import GetStadiscticData from "@/utils/statistic";
+import {BarChart3, Package} from "lucide-react";
 
 import {
   Card,
@@ -66,10 +67,13 @@ export function ChartCategory() {
   }, [data]);
 
   return (
-    <div className="flex flex-row gap-5">
-      <Card className="rounded-xl dark:bg-transparent ">
+    <div className="flex flex-col md:flex-row gap-5">
+      <Card className="rounded-xl dark:bg-transparent w-full md:w-1/2">
         <CardHeader className="items-center pb-0">
-          <CardTitle>Categories</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-6 w-6" />
+            Categories
+          </CardTitle>
           <CardDescription>Amount of product for each category</CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
@@ -129,46 +133,26 @@ export function ChartCategory() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="flex flex-col items-center justify-center rounded-xl dark:bg-transparent mt-5 ">
+      <Card className="rounded-xl dark:bg-transparent w-full md:w-1/2">
         <CardHeader>
-          <CardTitle>Top 10 Products with Lowest Stock</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Package className="h-6 w-6" />
+            Total Products
+          </CardTitle>
           <CardDescription>
-            Hover over the bars to view detailed stock quantities
+            Total number of products in database
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-[400px]">
-            <BarChart
-              accessibilityLayer
-              data={chartData}
-              layout="vertical"
-              margin={{left: 20}}
-            >
-              <XAxis type="number" dataKey="quantity" hide />
-              <YAxis
-                dataKey="product"
-                type="category"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              />
-              <Bar dataKey="quantity" fill="var(--color-quantity)" radius={5} />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          <div className="leading-none text-muted-foreground">
-            Displaying stock levels for the 10 products with the least inventory
+          <div className="flex items-center justify-center h-[250px]">
+            <span className="text-6xl font-bold">
+              {totalAmount.toLocaleString()}
+            </span>
           </div>
+        </CardContent>
+        <CardFooter className="text-center text-sm text-muted-foreground">
+          This represents the total count of all products across all categories
         </CardFooter>
-      </Card>
-      <Card className="rounded-xl dark:bg-transparent ">
-        <CardHeader>Total of products</CardHeader>
-        <CardContent>{totalAmount}</CardContent>
       </Card>
     </div>
   );

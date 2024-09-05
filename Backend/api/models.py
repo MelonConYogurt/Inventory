@@ -40,7 +40,9 @@ class CategoryCount(BaseModel):
 
 class ModelStatistics(BaseModel):
     product_total_count: int
+    value_inventory: float
     category_counts: List[CategoryCount]
+    top_10_most_quantity: List[ProductQuantity]
     top_10_least_quantity: List[ProductQuantity]
 
 class Token(BaseModel):

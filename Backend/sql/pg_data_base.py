@@ -358,18 +358,37 @@ class data_base:
                 ORDER BY total_quantity ASC
                 LIMIT 10;
             """
+            
+            query_top_10_most_quantity = """
+                SELECT product_name, SUM(product_quantity) AS total_quantity
+                FROM public.products
+                GROUP BY product_name
+                ORDER BY total_quantity DESC
+                LIMIT 10;
+                
+            """
+            
+            query_value_inventory = ("SELECT calcular_total_inventario();")
+            self.cursor.execute(query_value_inventory)
+            value_inventory = self.cursor.fetchone()
+            
             self.cursor.execute(query_top_10_least_quantity)
             top_10_least_quantity = self.cursor.fetchall()
+            
+            self.cursor.execute(query_top_10_most_quantity)
+            top_10_most_quantity = self.cursor.fetchall()
 
             self.connect.commit()
 
             self.logger.info("Product category counts: %s", category_counts)
             self.logger.info("Total product count: %d", total_count)
             self.logger.info("Top 10 products with least quantity: %s", top_10_least_quantity)
-
+            
             return {
+                "value_inventory": value_inventory[0],
                 "category_counts": category_counts,
                 "total_count": total_count,
+                "top_10_most_quantity": top_10_most_quantity,
                 "top_10_least_quantity": top_10_least_quantity
             }
         except psycopg2.Error as err:
