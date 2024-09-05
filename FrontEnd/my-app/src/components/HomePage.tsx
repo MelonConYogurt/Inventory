@@ -8,8 +8,9 @@ import {
   ShoppingCart,
   Truck,
   BarChart,
-  CirclePlus,
-  ShoppingBasket,
+  PlusCircle,
+  ClipboardList,
+  Users,
 } from "lucide-react";
 import CardDisplay from "./Dashboard";
 import {ModeToggle} from "../components/ModeTogle";
@@ -20,18 +21,39 @@ import FormSupplier from "./AddSupplier";
 import {motion, AnimatePresence} from "framer-motion";
 import ViewSales from "./ViewSales";
 
-function HomePage() {
+export default function Component() {
   const [activeComponent, setActiveComponent] = useState<string | null>(null);
+  const [activeButton, setActiveButton] = useState<string | null>(null);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setActiveComponent("WelcomeMessage");
-    }, 500);
+    }, 200);
     return () => clearTimeout(timer);
   }, []);
 
   const handleButtonClick = (component: string) => {
     setActiveComponent(component);
+    setActiveButton(component);
   };
+
+  const buttonClass = (name: string) =>
+    `justify-start items-center ${
+      activeButton === name
+        ? "bg-zinc-200 dark:bg-zinc-600 text-zinc-900 dark:text-zinc-50"
+        : "hover:bg-zinc-200 dark:hover:bg-zinc-600"
+    }`;
+
+  const menuItems = [
+    {name: "Dashboard", icon: LayoutDashboard},
+    {name: "Inventory", icon: Package},
+    {name: "View sales", icon: ShoppingCart},
+    {name: "Add sale", icon: PlusCircle},
+    {name: "Add product", icon: ClipboardList},
+    {name: "Suppliers", icon: Truck},
+    {name: "Reports", icon: BarChart},
+    {name: "Users", icon: Users},
+  ];
 
   return (
     <div className="grid grid-rows-[auto,1fr] grid-cols-[auto,1fr] h-screen">
@@ -44,7 +66,10 @@ function HomePage() {
           <Button
             variant={"link"}
             className="p-4 text-xl"
-            onClick={() => setActiveComponent("WelcomeMessage")}
+            onClick={() => {
+              setActiveComponent("WelcomeMessage");
+              setActiveButton(null);
+            }}
           >
             Inventory app
           </Button>
@@ -57,67 +82,24 @@ function HomePage() {
       {/* Menu side */}
       <section
         id="menu-left-side"
-        className="row-span-2 w-60 dark:bg-zinc-800 p-2 border-r border-zinc-300 dark:border-zinc-700"
+        className="row-span-2 dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700"
       >
         <div className="flex flex-col w-56">
-          <Button
-            variant="ghost"
-            className="justify-start dark:hover:bg-zinc-600 rounded-xl"
-            onClick={() => handleButtonClick("Dashboard")}
-          >
-            <LayoutDashboard size={18} className="mr-2" />
-            Dashboard
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-start dark:hover:bg-zinc-600 rounded-xl"
-            onClick={() => handleButtonClick("Inventory")}
-          >
-            <Package size={18} className="mr-2" />
-            Inventory
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-start dark:hover:bg-zinc-600 rounded-xl"
-            onClick={() => handleButtonClick("View sales")}
-          >
-            <ShoppingCart size={18} className="mr-2" />
-            View sales
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-start dark:hover:bg-zinc-600 rounded-xl"
-            onClick={() => handleButtonClick("Add sale")}
-          >
-            <ShoppingBasket size={18} className="mr-2" />
-            Add sale
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-start dark:hover:bg-zinc-600 rounded-xl"
-            onClick={() => handleButtonClick("Add product")}
-          >
-            <CirclePlus size={18} className="mr-2" />
-            Add product
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-start dark:hover:bg-zinc-600 rounded-xl"
-            onClick={() => handleButtonClick("Suppliers")}
-          >
-            <Truck size={18} className="mr-2" />
-            Suppliers
-          </Button>
-          <Button
-            variant="ghost"
-            className="justify-start dark:hover:bg-zinc-600 rounded-xl"
-            onClick={() => handleButtonClick("Reports")}
-          >
-            <BarChart size={18} className="mr-2" />
-            Reports
-          </Button>
+          {menuItems.map((item) => (
+            <Button
+              key={item.name}
+              variant="ghost"
+              name={item.name}
+              className={buttonClass(item.name)}
+              onClick={() => handleButtonClick(item.name)}
+            >
+              <item.icon size={18} className="mr-2" />
+              {item.name}
+            </Button>
+          ))}
         </div>
       </section>
+
       {/* Main display */}
       <section
         id="main-display"
@@ -153,16 +135,15 @@ function HomePage() {
             )}
             {activeComponent === "Dashboard" && <CardDisplay />}
             {activeComponent === "Inventory" && <Inventory />}
-            {activeComponent == "View sales" && <ViewSales />}
-            {activeComponent == "Add sale" && <Addsale />}
+            {activeComponent === "View sales" && <ViewSales />}
+            {activeComponent === "Add sale" && <Addsale />}
             {activeComponent === "Add product" && <Sales />}
             {activeComponent === "Suppliers" && <FormSupplier />}
             {activeComponent === "Reports" && <div>Reports Component</div>}
+            {activeComponent === "Users" && <div>Users Component</div>}
           </motion.div>
         </AnimatePresence>
       </section>
     </div>
   );
 }
-
-export default HomePage;

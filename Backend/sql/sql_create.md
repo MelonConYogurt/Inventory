@@ -105,4 +105,140 @@ CREATE INDEX idx_product_code
 
 CREATE INDEX idx_sale_code
     ON public.sales (sale_code ASC NULLS LAST);
+    
+```
+
+
+## Base de datos completa (SQL generico)
+
+```sql
+CREATE TABLE products (
+  product_id bigint NOT NULL DEFAULT nextval('products_product_id_seq'::regclass) PRIMARY KEY,
+  product_name text NOT NULL,
+  product_price numeric(12, 2) NOT NULL,
+  product_code bigint NOT NULL,
+  product_quantity bigint NOT NULL,
+  product_category text,
+  product_description text
+);
+
+CREATE UNIQUE INDEX products_pkey ON products (product_id);
+CREATE INDEX idx_product_code ON products (product_code);
+
+CREATE TABLE sale_products (
+  sale_products_id bigint NOT NULL DEFAULT nextval('sale_products_sale_products_id_seq'::regclass) PRIMARY KEY,
+  sale_id bigint NOT NULL,
+  product_id bigint NOT NULL,
+  quantity bigint NOT NULL,
+  product_price_at_sale numeric(12, 2) NOT NULL
+);
+
+CREATE UNIQUE INDEX sale_products_pkey ON sale_products (sale_products_id);
+
+CREATE TABLE sales (
+  sale_id bigint NOT NULL DEFAULT nextval('sales_sale_id_seq'::regclass) PRIMARY KEY,
+  sale_code bigint NOT NULL,
+  sale_date date NOT NULL,
+  sale_total bigint
+);
+
+CREATE UNIQUE INDEX sales_pkey ON sales (sale_id);
+CREATE INDEX idx_sale_code ON sales (sale_code);
+
+CREATE TABLE suppliers (
+  supplier_id integer NOT NULL DEFAULT nextval('suppliers_supplier_id_seq'::regclass) PRIMARY KEY,
+  supplier_name text NOT NULL,
+  supplier_phone bigint NOT NULL,
+  supplier_direction text,
+  supplier_nit bigint,
+  supplier_email text,
+  supplier_contact text
+);
+
+CREATE UNIQUE INDEX suppliers_pkey ON suppliers (supplier_id);
+
+CREATE TABLE user (
+  user_id integer NOT NULL DEFAULT nextval('user_user_id_seq'::regclass) PRIMARY KEY,
+  username text NOT NULL,
+  full_name text NOT NULL,
+  email text NOT NULL,
+  password text NOT NULL,
+  disabled boolean NOT NULL DEFAULT false,
+  admin boolean NOT NULL DEFAULT false
+);
+
+CREATE UNIQUE INDEX user_pkey ON user (user_id);
+
+ALTER TABLE sale_products ADD CONSTRAINT pk_sale_id FOREIGN KEY (sale_id) REFERENCES sales (sale_id);
+ALTER TABLE sale_products ADD CONSTRAINT pk_sale_products_id FOREIGN KEY (product_id) REFERENCES products (product_id);
+
+```
+
+## Base de datos completa (SQL postgres)
+
+```sql
+CREATE SEQUENCE IF NOT EXISTS products_product_id_seq;
+CREATE TABLE IF NOT EXISTS products (
+  product_id bigint NOT NULL DEFAULT nextval('products_product_id_seq') PRIMARY KEY,
+  product_name text NOT NULL,
+  product_price numeric(12, 2) NOT NULL,
+  product_code bigint NOT NULL,
+  product_quantity bigint NOT NULL,
+  product_category text,
+  product_description text
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS products_pkey ON products (product_id);
+CREATE INDEX IF NOT EXISTS idx_product_code ON products (product_code);
+
+CREATE SEQUENCE IF NOT EXISTS sale_products_sale_products_id_seq;
+CREATE TABLE IF NOT EXISTS sale_products (
+  sale_products_id bigint NOT NULL DEFAULT nextval('sale_products_sale_products_id_seq') PRIMARY KEY,
+  sale_id bigint NOT NULL,
+  product_id bigint NOT NULL,
+  quantity bigint NOT NULL,
+  product_price_at_sale numeric(12, 2) NOT NULL
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS sale_products_pkey ON sale_products (sale_products_id);
+
+CREATE SEQUENCE IF NOT EXISTS sales_sale_id_seq;
+CREATE TABLE IF NOT EXISTS sales (
+  sale_id bigint NOT NULL DEFAULT nextval('sales_sale_id_seq') PRIMARY KEY,
+  sale_code bigint NOT NULL,
+  sale_date date NOT NULL,
+  sale_total bigint
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS sales_pkey ON sales (sale_id);
+CREATE INDEX IF NOT EXISTS idx_sale_code ON sales (sale_code);
+
+CREATE SEQUENCE IF NOT EXISTS suppliers_supplier_id_seq;
+CREATE TABLE IF NOT EXISTS suppliers (
+  supplier_id integer NOT NULL DEFAULT nextval('suppliers_supplier_id_seq') PRIMARY KEY,
+  supplier_name text NOT NULL,
+  supplier_phone bigint NOT NULL,
+  supplier_direction text,
+  supplier_nit bigint,
+  supplier_email text,
+  supplier_contact text
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS suppliers_pkey ON suppliers (supplier_id);
+
+CREATE SEQUENCE IF NOT EXISTS user_user_id_seq;
+CREATE TABLE IF NOT EXISTS "user" (
+  user_id integer NOT NULL DEFAULT nextval('user_user_id_seq') PRIMARY KEY,
+  username text NOT NULL,
+  full_name text NOT NULL,
+  email text NOT NULL,
+  password text NOT NULL,
+  disabled boolean NOT NULL DEFAULT false,
+  admin boolean NOT NULL DEFAULT false
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS user_pkey ON "user" (user_id);
+
+ALTER TABLE sale_products ADD CONSTRAINT pk_sale_id FOREIGN KEY (sale_id) REFERENCES sales (sale_id);
+ALTER TABLE sale_products ADD CONSTRAINT pk_sale_products_id FOREIGN KEY (product_id) REFERENCES products (product_id);
 ```
