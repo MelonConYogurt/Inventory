@@ -173,6 +173,12 @@ async def add_new_product(product: model_product):
 ```
 
 ## Vistas
+![Screenshot 2024-09-05 185025](https://github.com/user-attachments/assets/303f5a19-ee0f-44ee-9da5-61d669a6468a)
+![Screenshot 2024-09-05 185221](https://github.com/user-attachments/assets/d311b231-e74e-42c8-a1ac-a14e262ba33c)
+![Screenshot 2024-09-05 185256](https://github.com/user-attachments/assets/89a01ab2-3213-4d6f-9879-6f694658bc73)
+![Screenshot 2024-09-05 185316](https://github.com/user-attachments/assets/dbda7c1c-7305-4a4e-8a01-f100ffd7c237)
+![Screenshot 2024-09-05 185323](https://github.com/user-attachments/assets/563279e6-9f20-4588-8711-abeb50c60f62)
+![Screenshot 2024-09-05 185330](https://github.com/user-attachments/assets/8aa2cf21-7031-4a20-8074-de70ccc3c5fa)
 
 
 ## Uso
