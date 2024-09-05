@@ -1,13 +1,23 @@
 "use client";
 
 import * as React from "react";
-import {Check, ChevronsUpDown} from "lucide-react";
+import {
+  Check,
+  ChevronsUpDown,
+  Package,
+  PlusCircle,
+  RefreshCcw,
+  Clipboard,
+  ShoppingCart,
+  Search,
+} from "lucide-react";
 import {useState, useEffect} from "react";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import {toast, Toaster} from "sonner";
+import {ScrollArea} from "@/components/ui/scroll-area";
 import {
   Card,
   CardContent,
@@ -24,7 +34,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import {cn} from "@/lib/utils";
 import {
   Command,
@@ -35,12 +44,10 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-
 import SendData from "@/utils/SendProducts";
 import GetDataProducts from "@/utils/products";
 import {DataTable} from "./Data-table";
 import {columns} from "./Columns";
-import {RefreshCcw} from "lucide-react";
 
 const inputClasses = "dark:bg-transparent !rounded-[8px]";
 
@@ -74,15 +81,12 @@ export default function Component() {
   ) {
     const {name, value} = e.target;
     setFormValues({...formValues, [name]: value});
-    console.log(formValues);
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const updatedFormValues = {...formValues, category: CategoryValue};
     setFormValues(updatedFormValues);
-    console.log(CategoryValue);
-    console.log(updatedFormValues);
     setProducts((prevProducts) => [...prevProducts, updatedFormValues]);
 
     setCategoryValue("");
@@ -109,16 +113,15 @@ export default function Component() {
     const token = sessionStorage.getItem("token");
     if (token) {
       try {
-        console.log(updatedProducts);
         const validation = await SendData(updatedProducts);
         if (validation === true) {
-          toast.success("product added to database", {
+          toast.success("Products added to database", {
             position: "bottom-left",
             duration: 5000,
           });
           setProducts([]);
         } else {
-          toast.error("Fail will adding the products to the database", {
+          toast.error("Failed to add products to the database", {
             position: "bottom-left",
             duration: 5000,
           });
@@ -136,7 +139,7 @@ export default function Component() {
       try {
         const productsInventory = await GetDataProducts(1000);
         if (productsInventory.length === 0) {
-          toast.error("Fail will fetching the inventory", {
+          toast.error("Failed to fetch inventory", {
             position: "bottom-left",
             duration: 5000,
           });
@@ -152,34 +155,13 @@ export default function Component() {
   }, [refresh]);
 
   const categoryValues = [
-    {
-      value: "electronics",
-      label: "Electronics",
-    },
-    {
-      value: "toys",
-      label: "Toys",
-    },
-    {
-      value: "clothing",
-      label: "Clothing",
-    },
-    {
-      value: "home decor",
-      label: "Home decor",
-    },
-    {
-      value: "Material",
-      label: "Material",
-    },
-    {
-      value: "Food",
-      label: "Food",
-    },
-    {
-      value: "Sports equipment",
-      label: "sports equipment",
-    },
+    {value: "electronics", label: "Electronics"},
+    {value: "toys", label: "Toys"},
+    {value: "clothing", label: "Clothing"},
+    {value: "home decor", label: "Home decor"},
+    {value: "Material", label: "Material"},
+    {value: "Food", label: "Food"},
+    {value: "Sports equipment", label: "Sports equipment"},
   ];
 
   return (
@@ -193,9 +175,12 @@ export default function Component() {
           <Card className="dark:bg-transparent rounded-xl ">
             <form onSubmit={handleSubmit}>
               <CardHeader>
-                <CardTitle>Create New Product</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <PlusCircle className="h-5 w-5" />
+                  Create New Product
+                </CardTitle>
                 <CardDescription>
-                  Fill out the form to add a new product
+                  Fill out the form to add a new product to your inventory
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -324,7 +309,7 @@ export default function Component() {
                 <Button
                   type="submit"
                   className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1"
-                  variant={"outline"}
+                  variant="outline"
                 >
                   Add product
                 </Button>
@@ -336,42 +321,64 @@ export default function Component() {
         <div className="w-2/3">
           <Card className="dark:bg-transparent rounded-xl ">
             <CardHeader>
-              <CardTitle>Product List</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Clipboard className="h-5 w-5" />
+                Product List
+              </CardTitle>
+              <CardDescription>
+                Review and confirm the products before adding to inventory
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Code</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Description</TableHead>
+                    <TableHead className="w-[150px]">Name</TableHead>
+                    <TableHead className="w-[150px]">Price</TableHead>
+                    <TableHead className="w-[150px]">Code</TableHead>
+                    <TableHead className="w-[150px]">Quantity</TableHead>
+                    <TableHead className="w-[150px]">Category</TableHead>
+                    <TableHead className="w-[150px]">Description</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>
-                  {products.map((product, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{product.name}</TableCell>
-                      <TableCell>{product.price}</TableCell>
-                      <TableCell>{product.code}</TableCell>
-                      <TableCell>{product.quantity}</TableCell>
-                      <TableCell>{product.category}</TableCell>
-                      <TableCell>{product.description}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
               </Table>
+              <ScrollArea className="h-[400px]">
+                <Table>
+                  <TableBody>
+                    {products.map((product, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="w-[150px]">
+                          {product.name}
+                        </TableCell>
+                        <TableCell className="w-[150px]">
+                          {product.price}
+                        </TableCell>
+                        <TableCell className="w-[150px]">
+                          {product.code}
+                        </TableCell>
+                        <TableCell className="w-[150px]">
+                          {product.quantity}
+                        </TableCell>
+                        <TableCell className="w-[150px]">
+                          {product.category}
+                        </TableCell>
+                        <TableCell className="w-[150px]">
+                          {product.description}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </ScrollArea>
             </CardContent>
             <CardFooter>
               <Button
                 type="button"
                 className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1"
-                variant={"outline"}
+                variant="outline"
                 onClick={handleCreatedProducts}
               >
-                Created products
+                Create products
               </Button>
             </CardFooter>
           </Card>
@@ -379,31 +386,33 @@ export default function Component() {
       </div>
 
       <div className="mt-7">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight mt-5">
-            Actual products in inventory
-          </h2>
-          <p className="text-muted-foreground mb-5">
-            Search if the product already exist
-          </p>
-          <Button
-            variant={"outline"}
-            className="mb-5 rounded-full dark:bg-transparent"
-            onClick={() => {
-              setRefresh((prev) => prev + 1);
-              toast.success("Data reloaded", {
-                position: "bottom-left",
-                duration: 5000,
-              });
-            }}
-          >
-            <RefreshCcw></RefreshCcw>
-          </Button>
-
-          <hr />
-        </div>
-
-        <DataTable columns={columns} data={data}></DataTable>
+        <Card className="dark:bg-transparent rounded-xl p-5">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight mt-5 flex items-center gap-2">
+              <ShoppingCart className="h-6 w-6" />
+              Current Inventory
+            </h2>
+            <p className="text-muted-foreground mb-5 flex items-center gap-2">
+              <Search className="h-4 w-4" />
+              Search and manage your existing product inventory
+            </p>
+            <Button
+              variant="outline"
+              className="mb-5 rounded-full dark:bg-transparent"
+              onClick={() => {
+                setRefresh((prev) => prev + 1);
+                toast.success("Data reloaded", {
+                  position: "bottom-left",
+                  duration: 5000,
+                });
+              }}
+            >
+              <RefreshCcw className="h-4 w-4 mr-2" />
+              Refresh Data
+            </Button>
+          </div>
+          <DataTable columns={columns} data={data} />
+        </Card>
       </div>
     </div>
   );

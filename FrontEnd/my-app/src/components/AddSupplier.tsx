@@ -55,14 +55,14 @@ export default function FormSupplier() {
     setData({...data, [name]: value});
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const dataToSend = {
       ...data,
       phone: Number(data.phone),
       nit: Number(data.nit),
     };
-    const validation = SendSupplierData(dataToSend);
+    const validation = await SendSupplierData(dataToSend);
     if (validation) {
       toast.success("supplier added to database", {
         position: "bottom-left",
@@ -102,7 +102,7 @@ export default function FormSupplier() {
                 <span>Supplier Information</span>
               </CardTitle>
               <CardDescription>
-                Please provide the supplier's contact details
+                Please provide the supplier&rsquo;s contact details
               </CardDescription>
             </CardHeader>
             <CardContent>
