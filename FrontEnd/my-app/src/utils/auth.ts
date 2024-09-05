@@ -1,5 +1,3 @@
-"use client";
-
 async function GetToken(username: string, password: string): Promise<boolean> {
   if (!username || !password) {
     return false;
@@ -28,7 +26,7 @@ async function GetToken(username: string, password: string): Promise<boolean> {
 
     const tokenResponse = await response.json();
     const token = tokenResponse.access_token;
-    sessionStorage.setItem('token', token);
+    sessionStorage.setItem("token", token);
     return true;
   } catch (error) {
     return false;

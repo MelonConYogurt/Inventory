@@ -7,11 +7,11 @@ import {ChartCategory} from "../components/ChartCategory";
 import GetDataProducts from "@/utils/products";
 import {Package, RefreshCcw} from "lucide-react";
 import {Button} from "./ui/button";
+import {ChartTopLeast} from "./ChartTopLess";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -92,6 +92,9 @@ function Inventory() {
       </div>
       <div className="w-auto h-auto">
         <ChartCategory />
+      </div>
+      <div className="w-auto h-auto">
+        <ChartTopLeast></ChartTopLeast>
       </div>
     </div>
   );
