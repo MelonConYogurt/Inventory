@@ -104,6 +104,11 @@ El módulo de gestión de base de datos (`database.py`) permite realizar operaci
 - `sale()`: Crea una nueva venta en la base de datos y genera un código QR para la misma.
 - `sale_products()`: Escanea productos y los registra como parte de una venta en la base de datos.
 
+## Diagrama:
+
+![InventoryApp-db](https://github.com/user-attachments/assets/b02cbcfd-b07a-45e9-aab8-78d12ca5676f)
+
+
 **Uso:**
 
 ```python
