@@ -11,12 +11,13 @@ import {
 } from "lucide-react";
 
 function Dashboard() {
-  const classCards = "dark:bg-transparent rounded-xl hover:-translate-y-1 ";
+  const classCards =
+    "dark:bg-transparent rounded-xl transition ease-in-out delay-150  hover:-translate-y-1 hover:dark:bg-zinc-800";
   return (
     <div>
       <div className="flex flex-row gap-5 mb-5 ">
         <Card className={classCards}>
-          <CardHeader className="flex flex-row items-center gap-2">
+          <CardHeader className="flex flex-row items-center gap-2 ">
             <Plus />
             <CardTitle>Add New Items</CardTitle>
           </CardHeader>
