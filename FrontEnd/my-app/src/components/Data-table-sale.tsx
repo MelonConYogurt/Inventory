@@ -417,9 +417,9 @@ export function DataTable<TData, TValue>({
           </TableFooter>
         </Table>
       </div>
-      <div>
+      <>
         <Toaster richColors />
-      </div>
+      </>
     </div>
   );
 }

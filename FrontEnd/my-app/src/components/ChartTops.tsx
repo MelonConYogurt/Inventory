@@ -4,6 +4,7 @@ import {Bar, BarChart, XAxis, YAxis, LabelList, CartesianGrid} from "recharts";
 import {useEffect, useState} from "react";
 import GetStadiscticData from "@/utils/statistic";
 import {TrendingUp, TrendingDown} from "lucide-react";
+import {toast, Toaster} from "sonner";
 
 import {
   Card,
@@ -40,29 +41,46 @@ interface product {
 export function ChartTops() {
   const [chartDataLeast, setChartDataLeast] = useState<product[]>([]);
   const [chartDataMost, setChartDataMost] = useState<product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function GetData() {
-      const data = await GetStadiscticData();
-      const top_least = data.top_10_least_quantity;
-      const top_most = data.top_10_most_quantity;
-      const newDataLeast = top_least.map((product: product) => {
-        return {
-          product: product.product_name,
-          quantity: product.total_quantity,
-        };
-      });
-      const newDataMost = top_most.map((product: product) => {
-        return {
-          product: product.product_name,
-          quantity: product.total_quantity,
-        };
-      });
-      setChartDataLeast(newDataLeast);
-      setChartDataMost(newDataMost);
+      try {
+        const data = await GetStadiscticData();
+        const top_least = data.top_10_least_quantity;
+        const top_most = data.top_10_most_quantity;
+        const newDataLeast = top_least.map((product: product) => {
+          return {
+            product: product.product_name,
+            quantity: product.total_quantity,
+          };
+        });
+        const newDataMost = top_most.map((product: product) => {
+          return {
+            product: product.product_name,
+            quantity: product.total_quantity,
+          };
+        });
+        setChartDataLeast(newDataLeast);
+        setChartDataMost(newDataMost);
+      } catch (error) {
+        toast.error("Error loading data");
+      } finally {
+        setIsLoading(false);
+      }
     }
     GetData();
   }, []);
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading("Wait while loading the database", {
+        position: "bottom-left",
+      });
+    } else {
+      toast.dismiss();
+    }
+  }, [isLoading]);
 
   return (
     <div className="flex flex-row gap-5">
@@ -178,6 +196,9 @@ export function ChartTops() {
           </div>
         </CardFooter>
       </Card>
+      <>
+        <Toaster richColors />
+      </>
     </div>
   );
 }

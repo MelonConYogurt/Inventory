@@ -61,7 +61,6 @@ export default function Component() {
 
   return (
     <div className="grid grid-rows-[auto,1fr] grid-cols-[auto,1fr] h-screen">
-      {/* Menu top */}
       <section
         id="menu-top-side"
         className="col-span-2 h-14 dark:bg-zinc-800 border-b border-zinc-300 dark:border-zinc-700"
@@ -83,7 +82,6 @@ export default function Component() {
         </nav>
       </section>
 
-      {/* Menu side */}
       <section
         id="menu-left-side"
         className="row-span-2 dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700"
@@ -104,7 +102,6 @@ export default function Component() {
         </div>
       </section>
 
-      {/* Main display */}
       <section
         id="main-display"
         className="dark:bg-zinc-900 p-4 border-l border-t border-zinc-300 dark:border-zinc-700"
