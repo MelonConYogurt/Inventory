@@ -105,9 +105,24 @@ export function DataTable<TData, TValue>({
   }
 
   function handleSubmit(products: any) {
+    if (products.length === 0) {
+      toast.error("Almost one product had to be in the cart", {
+        position: "bottom-left",
+        duration: 5000,
+      });
+      return;
+    }
     SaleProducts(products);
     setProductsSelect([]);
     toast.success("Sale successfully", {
+      position: "bottom-left",
+      duration: 5000,
+    });
+  }
+
+  function handleCancel() {
+    setProductsSelect([]);
+    toast.info("The purchase was cancele", {
       position: "bottom-left",
       duration: 5000,
     });
@@ -324,6 +339,7 @@ export function DataTable<TData, TValue>({
         <Button
           variant={"outline"}
           className=" rounded-xl dark: bg-transparentrounded-xl dark: bg-transparent"
+          onClick={handleCancel}
         >
           Cancel
         </Button>
