@@ -37,6 +37,10 @@ export default function Component() {
     setActiveButton(component);
   };
 
+  const handleDashboardClick = (component: string) => {
+    setActiveComponent(component);
+  };
+
   const buttonClass = (name: string) =>
     `justify-start items-center ${
       activeButton === name
@@ -133,7 +137,9 @@ export default function Component() {
                 </motion.p>
               </div>
             )}
-            {activeComponent === "Dashboard" && <Dashboard />}
+            {activeComponent === "Dashboard" && (
+              <Dashboard component={handleDashboardClick} />
+            )}
             {activeComponent === "Inventory" && <Inventory />}
             {activeComponent === "View sales" && <ViewSales />}
             {activeComponent === "Add sale" && <Addsale />}
