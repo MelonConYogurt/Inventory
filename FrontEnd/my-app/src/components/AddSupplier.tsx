@@ -187,7 +187,7 @@ export default function FormSupplier() {
                   <Button
                     variant={"outline"}
                     type="submit"
-                    className="w-full dark:bg-transparent rounded-xl font-bold"
+                    className="w-full dark:bg-transparent rounded-xl font-bold dark:hover:bg-zinc-800"
                   >
                     Register Supplier
                   </Button>

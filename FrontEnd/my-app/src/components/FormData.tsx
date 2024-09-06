@@ -326,13 +326,13 @@ export default function Component() {
               <CardFooter className="gap-4">
                 <Button
                   type="submit"
-                  className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1"
+                  className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1 dark:hover:bg-zinc-800"
                   variant="outline"
                 >
                   Add product
                 </Button>
                 <Button
-                  className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1"
+                  className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1 dark:hover:bg-zinc-800"
                   variant="outline"
                   onClick={handleReset}
                 >
@@ -399,7 +399,7 @@ export default function Component() {
             <CardFooter>
               <Button
                 type="button"
-                className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1"
+                className="rounded-xl w-full dark:bg-transparent font-bold mt-1 mb-1 dark:hover:bg-zinc-800"
                 variant="outline"
                 onClick={handleCreatedProducts}
               >
