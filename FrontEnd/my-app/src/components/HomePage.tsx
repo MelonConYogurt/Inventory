@@ -12,7 +12,7 @@ import {
   ClipboardList,
   Users,
 } from "lucide-react";
-import CardDisplay from "./Dashboard";
+import Dashboard from "./Dashboard";
 import {ModeToggle} from "../components/ModeTogle";
 import Inventory from "./Inventory";
 import Sales from "./Sales";
@@ -133,7 +133,7 @@ export default function Component() {
                 </motion.p>
               </div>
             )}
-            {activeComponent === "Dashboard" && <CardDisplay />}
+            {activeComponent === "Dashboard" && <Dashboard />}
             {activeComponent === "Inventory" && <Inventory />}
             {activeComponent === "View sales" && <ViewSales />}
             {activeComponent === "Add sale" && <Addsale />}
