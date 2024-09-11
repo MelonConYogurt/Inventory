@@ -21,7 +21,13 @@ import {
 } from "@/components/ui/chart";
 
 export function ChartsCommons() {
-  const [data, setData] = useState([]);
+  interface ChartData {
+    product_category: string;
+    amount: number;
+    fill: string;
+  }
+
+  const [data, setData] = useState<ChartData[]>([]);
   const [chartConfig, setChartConfig] = useState({});
   const [value, setValue] = useState(0);
 
@@ -33,27 +39,36 @@ export function ChartsCommons() {
         const chartData = await responseData.category_counts;
         const total_value_inventory = responseData.value_inventory;
 
-        const newData = chartData.map((element) => {
-          const category = element.product_category
-            .replace(/\s+/g, "-")
-            .toLowerCase();
-          return {
-            category: element.product_category,
-            amount: element.amount,
-            fill: `var(--color-${category})`,
-          };
-        });
+        const newData = chartData.map(
+          (element: {product_category: string; amount: any}) => {
+            const category = element.product_category
+              .replace(/\s+/g, "-")
+              .toLowerCase();
+            return {
+              category: element.product_category,
+              amount: element.amount,
+              fill: `var(--color-${category})`,
+            };
+          }
+        );
 
-        const newChartConfig = chartData.reduce((config, element, index) => {
-          const categoryKey = element.product_category
-            .replace(/\s+/g, "-")
-            .toLowerCase();
-          config[categoryKey] = {
-            label: element.product_category,
-            color: `hsl(var(--chart-${index + 1}))`,
-          };
-          return config;
-        }, {});
+        const newChartConfig = chartData.reduce(
+          (
+            config: {[x: string]: {label: any; color: string}},
+            element: {product_category: string},
+            index: number
+          ) => {
+            const categoryKey = element.product_category
+              .replace(/\s+/g, "-")
+              .toLowerCase();
+            config[categoryKey] = {
+              label: element.product_category,
+              color: `hsl(var(--chart-${index + 1}))`,
+            };
+            return config;
+          },
+          {}
+        );
 
         setData(newData);
         setValue(total_value_inventory);

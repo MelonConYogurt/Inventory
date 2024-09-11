@@ -8,7 +8,11 @@ import {
 import {ChartsCommons} from "./ChartCategory";
 import {ChartTops} from "./ChartTops";
 
-export default function Dashboard({component}) {
+interface DashboardProps {
+  component: (componentActive: string) => void;
+}
+
+export default function Dashboard({component}: DashboardProps) {
   const handleClick = (componentActive: string) => {
     component(componentActive);
   };

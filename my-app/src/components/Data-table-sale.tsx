@@ -51,6 +51,7 @@ interface tableData {
   category: string;
   description: string;
   units?: number;
+  id?: any;
 }
 
 export function DataTable<TData, TValue>({
