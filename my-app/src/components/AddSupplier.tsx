@@ -22,9 +22,9 @@ import {toast, Toaster} from "sonner";
 
 interface Supplier {
   name: string;
-  phone: string;
+  phone: number;
   direction: string;
-  nit: string;
+  nit: number;
   email: string;
   contact: string;
 }
@@ -35,9 +35,9 @@ export default function FormSupplier() {
   const [refresh, setRefresh] = useState<number>(0);
   const [data, setData] = useState<Supplier>({
     name: "",
-    phone: "",
+    phone: 0,
     direction: "",
-    nit: "",
+    nit: 0,
     email: "",
     contact: "",
   });
@@ -59,8 +59,8 @@ export default function FormSupplier() {
     e.preventDefault();
     const dataToSend = {
       ...data,
-      phone: Number(data.phone),
-      nit: Number(data.nit),
+      phone: data.phone,
+      nit: data.nit,
     };
     const validation = await SendSupplierData(dataToSend);
     if (validation) {
@@ -70,9 +70,9 @@ export default function FormSupplier() {
       });
       setData({
         name: "",
-        phone: "",
+        phone: 0,
         direction: "",
-        nit: "",
+        nit: 0,
         email: "",
         contact: "",
       });
@@ -126,7 +126,7 @@ export default function FormSupplier() {
                       className={inputClasses}
                       id="phone"
                       name="phone"
-                      type="tel"
+                      type="number"
                       placeholder="Enter phone number"
                       value={data.phone}
                       onChange={handleChange}
@@ -151,6 +151,7 @@ export default function FormSupplier() {
                       className={inputClasses}
                       id="nit"
                       name="nit"
+                      type="number"
                       placeholder="Enter NIT"
                       value={data.nit}
                       onChange={handleChange}

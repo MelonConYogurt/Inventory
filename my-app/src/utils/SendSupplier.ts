@@ -1,8 +1,8 @@
 interface Supplier {
   name: string;
-  phone: string;
+  phone: number;
   direction: string;
-  nit: string;
+  nit: number;
   email: string;
   contact: string;
 }
