@@ -1,4 +1,4 @@
-# Inventory app (Para iniciar next primero "npm install")
+# Inventory app 
 
 ## Video demostración
 
