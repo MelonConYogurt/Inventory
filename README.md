@@ -1,5 +1,8 @@
 # Inventory app 
 
+https://inventory-react-app-two.vercel.app/
+
+
 ## Video demostración
 
 [![Video demostración](https://github.com/user-attachments/assets/00b2fa47-43c0-457a-a2d4-a2fa07dae268)](https://youtu.be/ZHEEwa6ybm0)
