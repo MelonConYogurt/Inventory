@@ -1,8 +1,9 @@
 # Inventory app (Para iniciar next primero "npm install")
 
-## Video demostracion
+## Video demostración
 
-[![Alt text]([[https://github.com/user-attachments/assets/f9bc2234-428c-4f4d-a143-9dfe22730ddc](https://github.com/user-attachments/assets/00b2fa47-43c0-457a-a2d4-a2fa07dae268)])](https://youtu.be/ZHEEwa6ybm0)
+[![Video demostración](https://github.com/user-attachments/assets/00b2fa47-43c0-457a-a2d4-a2fa07dae268)](https://youtu.be/ZHEEwa6ybm0)
+
 
 # Proyecto: Sistema de Gestión de Productos con Código de Barras y QR
 
