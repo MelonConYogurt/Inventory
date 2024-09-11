@@ -60,28 +60,7 @@ export default function Component() {
   ];
 
   return (
-    <div className="grid grid-rows-[auto,1fr] grid-cols-[auto,1fr] h-screen">
-      <section
-        id="menu-top-side"
-        className="col-span-2 h-14 dark:bg-zinc-800 border-b border-zinc-300 dark:border-zinc-700"
-      >
-        <nav className="flex flex-row items-center justify-between">
-          <Button
-            variant={"link"}
-            className="p-4 text-xl"
-            onClick={() => {
-              setActiveComponent("WelcomeMessage");
-              setActiveButton(null);
-            }}
-          >
-            Inventory app
-          </Button>
-          <div className="p-2">
-            <ModeToggle />
-          </div>
-        </nav>
-      </section>
-
+    <div className="grid grid-rows-[1fr] grid-cols-[auto,1fr] h-screen">
       <section
         id="menu-left-side"
         className="row-span-2 dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700"
