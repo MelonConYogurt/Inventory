@@ -2,7 +2,7 @@
 
 ## Video demostracion
 
-[![Alt text](https://github.com/user-attachments/assets/f9bc2234-428c-4f4d-a143-9dfe22730ddc)](https://youtu.be/ZHEEwa6ybm0)
+[![Alt text]([https://github.com/user-attachments/assets/f9bc2234-428c-4f4d-a143-9dfe22730ddc](https://github.com/user-attachments/assets/98eed1ba-1374-4f70-9d72-d4f9f86129e4))](https://youtu.be/ZHEEwa6ybm0)
 
 # Proyecto: Sistema de Gestión de Productos con Código de Barras y QR
 
