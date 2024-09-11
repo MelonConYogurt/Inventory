@@ -53,19 +53,20 @@ const inputClasses = "dark:bg-transparent !rounded-[8px]";
 
 interface Product {
   name: string;
-  price: string;
+  price: number;
   code: string;
-  quantity: string;
+  quantity: number;
   category: string;
   description: string;
+  id?: any;
 }
 
 export default function Component() {
   const [formValues, setFormValues] = useState<Product>({
     name: "",
-    price: "",
+    price: 0,
     code: "",
-    quantity: "",
+    quantity: 0,
     category: "",
     description: "",
   });
@@ -92,9 +93,9 @@ export default function Component() {
     setCategoryValue("");
     setFormValues({
       name: "",
-      price: "",
+      price: 0,
       code: "",
-      quantity: "",
+      quantity: 0,
       category: "",
       description: "",
     });
@@ -105,9 +106,9 @@ export default function Component() {
     setCategoryValue("");
     setFormValues({
       name: "",
-      price: "",
+      price: 0,
       code: "",
-      quantity: "",
+      quantity: 0,
       category: "",
       description: "",
     });
@@ -121,9 +122,9 @@ export default function Component() {
   async function handleCreatedProducts() {
     const updatedProducts = products.map((product) => ({
       name: product.name,
-      price: parseFloat(product.price),
-      code: parseInt(product.code, 10),
-      quantity: parseInt(product.quantity, 10),
+      price: product.price,
+      code: product.code,
+      quantity: product.quantity,
       category: product.category,
       description: product.description,
     }));

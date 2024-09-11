@@ -1,4 +1,4 @@
-interface Product {
+interface Products {
   id: string;
   name: string;
   price: number;
@@ -8,8 +8,8 @@ interface Product {
   description: string;
 }
 
-async function GetDataProducts(rows: number): Promise<Product[]> {
-  let listProducts: Product[] = [];
+async function GetDataProducts(rows: number): Promise<Products[]> {
+  let listProducts: Products[] = [];
   try {
     const token = sessionStorage.getItem("token");
     const response = await fetch(
@@ -30,7 +30,7 @@ async function GetDataProducts(rows: number): Promise<Product[]> {
       let products = jsonData.products;
 
       products.forEach((product: any) => {
-        let newProduct: Product = {
+        let newProduct: Products = {
           id: String(product.id),
           name: product.name,
           price: product.price,
