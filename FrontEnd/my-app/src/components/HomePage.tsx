@@ -65,6 +65,9 @@ export default function Component() {
         id="menu-left-side"
         className="row-span-2 dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700"
       >
+        <div className="mb-2">
+          <ModeToggle></ModeToggle>
+        </div>
         <div className="flex flex-col w-56">
           {menuItems.map((item) => (
             <Button

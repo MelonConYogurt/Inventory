@@ -22,11 +22,11 @@ export function ModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="rounded-xl dark:bg-zinc-900">
+        <Button variant="outline" className=" dark:bg-zinc-900 w-full ">
           Theme
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-auto rounded-xl dark:bg-zinc-800">
+      <DropdownMenuContent className="w-auto rounded-xl ">
         <DropdownMenuLabel>Choose a theme</DropdownMenuLabel>
         <DropdownMenuSeparator className="dark:bg-slate-950" />
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
