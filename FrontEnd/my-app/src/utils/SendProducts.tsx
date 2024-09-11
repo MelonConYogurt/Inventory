@@ -15,7 +15,7 @@ async function SendData(products: any[]) {
   try {
     const token = sessionStorage.getItem("token");
     const response = await fetch(
-      "http://127.0.0.1:8000/add/multiple/products",
+      "https://api-iv.vercel.app/add/multiple/products",
       {
         method: "POST",
         headers: {

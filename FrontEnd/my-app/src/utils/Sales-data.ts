@@ -3,7 +3,7 @@ async function GetSalesData() {
     const token = sessionStorage.getItem("token");
     if (!token) return false;
 
-    const response = await fetch("http://127.0.0.1:8000/get/sales/", {
+    const response = await fetch("https://api-iv.vercel.app/get/sales/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

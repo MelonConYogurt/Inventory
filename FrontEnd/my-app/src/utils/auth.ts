@@ -4,7 +4,7 @@ async function GetToken(username: string, password: string): Promise<boolean> {
   }
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/token", {
+    const response = await fetch("https://api-iv.vercel.app/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -23,7 +23,6 @@ async function GetToken(username: string, password: string): Promise<boolean> {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     const tokenResponse = await response.json();
     const token = tokenResponse.access_token;
     sessionStorage.setItem("token", token);

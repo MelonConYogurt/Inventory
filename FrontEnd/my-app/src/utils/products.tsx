@@ -13,7 +13,7 @@ async function GetDataProducts(rows: number): Promise<Product[]> {
   try {
     const token = sessionStorage.getItem("token");
     const response = await fetch(
-      `http://127.0.0.1:8000/products?limit=${rows}`,
+      `https://api-iv.vercel.app/products?limit=${rows}`,
       {
         method: "GET",
         headers: {

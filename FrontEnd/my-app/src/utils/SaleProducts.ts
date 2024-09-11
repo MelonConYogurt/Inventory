@@ -16,7 +16,7 @@ async function SaleProducts(data: Product[]) {
       throw new Error("Token no found close the app and re login");
     }
 
-    const response = await fetch("http://127.0.0.1:8000/sale/products/", {
+    const response = await fetch("https://api-iv.vercel.app/sale/products/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
